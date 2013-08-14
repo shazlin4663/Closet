@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SlideMenu</string>
+    <string name="app_name">Closet</string>
     <string name="action_settings">Settings</string>
+    <string name = "friend"> Friend</string>
+    <string name = "NoImage">No Image</string>
+    <string name = "username">Username</string>
 
 </resources>
