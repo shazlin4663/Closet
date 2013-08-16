@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.app.closet.DisplayImage"
+            android:name="com.app.closet.IntentClass"
             android:label="@string/app_name" >
         </activity>
     </application>

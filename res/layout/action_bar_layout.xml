@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+    android:layout_height="match_parent"
     android:layout_margin="5dp">
 
-    <Button
-        android:id="@+id/btnSlideLeft"
+    <ImageView
+        android:id="@+id/ivRightMenu"
         android:layout_width="?attr/actionBarSize"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="?attr/actionBarItemBackground"
-        android:scaleType="centerInside" 
-        android:text ="Friend"/>
-
-    <Button
-        android:id="@+id/btnSlideRight"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="?attr/actionBarItemBackground"
-        android:scaleType="centerInside" 
-        android:text= " Setting"/>
+        android:src="@drawable/friend_icon"
+        android:contentDescription="@string/NoImage"/>
+    
+    <ImageView 
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height = "fill_parent"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/NoImage"
+        android:src="@drawable/ic_launcher"/>
+    
+    <Button
+        android:id="@+id/btnLeftMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/actionBarItemBackground"
+        android:text= "@string/action_settings"/>
 
 </RelativeLayout>
