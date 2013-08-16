@@ -1084,31 +1084,36 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040018;
         public static final int abs__title=0x7f040020;
         public static final int abs__up=0x7f04000b;
+        public static final int addImageCloth=0x7f040042;
+        public static final int addImageOther=0x7f040044;
+        public static final int addImagePant=0x7f040043;
         public static final int btnLeftMenu=0x7f040038;
         public static final int disableHome=0x7f040009;
         public static final int edit_query=0x7f04002b;
         public static final int fullscreen=0x7f040013;
         public static final int homeAsUp=0x7f040006;
-        public static final int ivFace=0x7f04003c;
+        public static final int ivFace=0x7f04003f;
         public static final int ivRightMenu=0x7f040037;
         public static final int left=0x7f040010;
         public static final int listMode=0x7f040002;
         public static final int lvFriends=0x7f040039;
-        public static final int lvOther=0x7f04003b;
+        public static final int lvOther=0x7f04003d;
         public static final int margin=0x7f040012;
         public static final int normal=0x7f040001;
         public static final int right=0x7f040011;
         public static final int selected_view=0x7f040014;
-        public static final int setting=0x7f040040;
+        public static final int setting=0x7f040045;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int slidingmenumain=0x7f04003f;
+        public static final int slidingmenumain=0x7f040041;
         public static final int tabMode=0x7f040003;
-        public static final int textView=0x7f04003e;
-        public static final int tvshowName=0x7f04003d;
+        public static final int tvImage=0x7f04003e;
+        public static final int tvshowName=0x7f040040;
         public static final int useLogo=0x7f040004;
-        public static final int viewpager=0x7f04003a;
+        public static final int viewPager=0x7f04003a;
+        public static final int viewpagerOther=0x7f04003c;
+        public static final int viewpagerPant=0x7f04003b;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -1141,12 +1146,12 @@ containing a value of this type.
         public static final int activity_left_menu=0x7f030016;
         public static final int activity_main=0x7f030017;
         public static final int activity_right_menu=0x7f030018;
-        public static final int cloth_view=0x7f030019;
-        public static final int items_layout=0x7f03001a;
-        public static final int pants_view=0x7f03001b;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001c;
-        public static final int sherlock_spinner_item=0x7f03001d;
-        public static final int slidingmenumain=0x7f03001e;
+        public static final int imageview_layout_for_viewpager=0x7f030019;
+        public static final int items_layout_for_slidemenu=0x7f03001a;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
+        public static final int sherlock_spinner_item=0x7f03001c;
+        public static final int slidingmenumain=0x7f03001d;
+        public static final int viewpager_layout=0x7f03001e;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
@@ -1193,6 +1198,9 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090007;
         public static final int action_settings=0x7f09000e;
+        public static final int addCloth=0x7f090012;
+        public static final int addOther=0x7f090014;
+        public static final int addPant=0x7f090013;
         public static final int app_name=0x7f09000d;
         public static final int friend=0x7f09000f;
         public static final int username=0x7f090011;

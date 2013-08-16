@@ -10,5 +10,4 @@
         android:layout_height="fill_parent" >
     </ListView>
 
-
 </com.app.closet.LeftScreenMenu>

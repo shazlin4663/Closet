@@ -6,5 +6,7 @@
     <string name = "friend"> Friend</string>
     <string name = "NoImage">No Image</string>
     <string name = "username">Username</string>
-
+    <string name ="addCloth">Add Cloth</string>
+    <string name ="addPant">Add Pant</string>
+    <string name ="addOther">Add Other</string>
 </resources>

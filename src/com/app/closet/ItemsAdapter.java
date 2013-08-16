@@ -38,7 +38,7 @@ public class ItemsAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater layoutInflater = LayoutInflater.from(_context);
-		View itemView = layoutInflater.inflate(R.layout.items_layout, null);
+		View itemView = layoutInflater.inflate(R.layout.items_layout_for_slidemenu, null);
 		
 		TextView tvUsername = (TextView) itemView.findViewById(R.id.tvshowName);
 		
