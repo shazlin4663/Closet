@@ -1,19 +1,17 @@
 package com.app.closet;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 @SuppressLint("NewApi")
 public class LeftScreenMenu extends LinearLayout {
-
-	private List<String> list = new ArrayList<String>();
-	private ListView lvView;
-	private ItemsAdapter itemAdapter;
+	public static int optionImageIndex;
 	
 	public LeftScreenMenu(Context context) {
 		super(context);
@@ -33,14 +31,46 @@ public class LeftScreenMenu extends LinearLayout {
 	protected void onFinishInflate() {
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
-		
-		lvView = (ListView) findViewById(R.id.lvFriends);
-		list.add("Eric");
-		list.add("lin");
-		
-		itemAdapter = new ItemsAdapter(getContext(), list);
-		lvView.setAdapter(itemAdapter);
 
+		Button btnAddCloth = (Button) findViewById(R.id.btnCloth);
+		btnAddCloth.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addImage();
+				optionImageIndex = 0;
+			}
+		});
+		
+		Button btnAddPant = (Button) findViewById(R.id.btnPant);
+		btnAddPant.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addImage();
+				optionImageIndex =1;	
+			}
+		});
+		
+		Button btnAddOther = (Button) findViewById(R.id.btnOther);
+		btnAddOther.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addImage();
+				optionImageIndex = 2;
+				
+			}
+		});
 	}
 	
+	private void addImage () {
+		Activity context = (Activity) getContext();
+		
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		context.startActivityForResult(Intent.createChooser(intent, "Select picture"),100);
+	}
+
 }

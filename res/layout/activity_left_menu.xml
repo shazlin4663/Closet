@@ -3,11 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <ListView
-        android:id="@+id/lvFriends"
+	
+    <Button 
+        android:id = "@+id/btnCloth"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </ListView>
+        android:layout_height="wrap_content"
+        android:text="@string/addCloth"/>
+
+    <Button 
+        android:id = "@+id/btnPant"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addPant"/>
+    <Button 
+        android:id = "@+id/btnOther"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addOther"/>
 
 </com.app.closet.LeftScreenMenu>

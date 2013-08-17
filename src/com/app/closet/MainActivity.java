@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,14 +12,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class MainActivity extends SherlockFragmentActivity {
-	private int optionImageIndex;
 	private SlidingMenu setUpLeftMenu, setUpRightMenu;
 	private Button btnLeftMenu;
 	private ImageView ivRightMenu;
@@ -29,6 +35,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	private List<Fragment> listClothFragment = new ArrayList<Fragment>();
 	private List<Fragment> listPantFragment = new ArrayList<Fragment>();
 	private List<Fragment> listOtherFragment = new ArrayList<Fragment>();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +57,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			
 			@Override
 			public void onClick(View v) {
-				setUpLeftMenu.toggle();		
+				setUpLeftMenu.toggle();
 			}
 		});
 		
@@ -58,24 +65,43 @@ public class MainActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-					setUpRightMenu.toggle();
+				setUpRightMenu.toggle();
 			}
 		});
-
+	
 		createLeftMenu();
 		createRightMenu();
 		
 		ViewPager pagerCloth = (ViewPager)findViewById(R.id.viewPager);
-		clothPageAdapter = new PagerAdapter(getSupportFragmentManager(), listClothFragment);
+		clothPageAdapter = new PagerAdapter(getSupportFragmentManager(), listClothFragment, MainActivity.this);
 		pagerCloth.setAdapter(clothPageAdapter);
-	
+		
 		ViewPager pagerPant = (ViewPager)findViewById(R.id.viewpagerPant);
-		pantPageAdapter = new PagerAdapter(getSupportFragmentManager(), listPantFragment);
+		pantPageAdapter = new PagerAdapter(getSupportFragmentManager(), listPantFragment, MainActivity.this);
 		pagerPant.setAdapter(pantPageAdapter);
 
 		ViewPager pagerOther = (ViewPager)findViewById(R.id.viewpagerOther);
-		otherPageAdapter = new PagerAdapter(getSupportFragmentManager(), listOtherFragment);
+		otherPageAdapter = new PagerAdapter(getSupportFragmentManager(), listOtherFragment, MainActivity.this);
 		pagerOther.setAdapter(otherPageAdapter);
+//		
+//	pagerCloth.setOnClickListener(new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			Intent intent = new Intent(MainActivity.this, FullScreenImage.class);
+//			startActivity(intent);
+//		}
+//	});
+////		pagerCloth.setOnTouchListener(new OnTouchListener() {
+////			
+////			@Override
+////			public boolean onTouch(View v, MotionEvent event) {
+////				Intent intent = new Intent(MainActivity.this, FullScreenImage.class);
+////				startActivity(intent);
+////				return false;
+////			}
+////		});
 	}
 	
 	private void createLeftMenu() {
@@ -116,32 +142,10 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-		switch (item.getItemId()) {
-		case R.id.addImageCloth:
-			addImage();
-			optionImageIndex = 0;
-			break;
-		case R.id.addImagePant:
-			addImage();
-			optionImageIndex = 1;
-			break;
-		case R.id.addImageOther:
-			addImage();
-			optionImageIndex = 2;
-			break;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void addImage() {
-		Intent intent = new Intent();
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		startActivityForResult(Intent.createChooser(intent, "Select picture"),
-				100);
-	}
-
-	//@Override
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -149,9 +153,9 @@ public class MainActivity extends SherlockFragmentActivity {
 			String result = data.toUri(0);
 			try {
 				InputStream is = getContentResolver().openInputStream(Uri.parse(result));
-				Bitmap image = CompressImage.decodeSampledBitmapFromResource(is, 200, 200);
+				Bitmap image = CompressImage.decodeSampledBitmapFromResource(is, 600, 200);
 				
-				switch (optionImageIndex) {
+				switch (LeftScreenMenu.optionImageIndex) {
 				case 0:
 					listClothFragment.add(ImageFragment.newInstance(image));
 					clothPageAdapter.notifyDataSetChanged();
@@ -164,9 +168,7 @@ public class MainActivity extends SherlockFragmentActivity {
 					listOtherFragment.add(ImageFragment.newInstance(image));
 					otherPageAdapter.notifyDataSetChanged();
 					break;
-				}
-				
-				
+				}	
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
