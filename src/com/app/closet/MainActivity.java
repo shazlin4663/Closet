@@ -41,23 +41,6 @@ public class MainActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
-		
-		Parse.initialize(MainActivity.this, "closet", "app");
-		PushService.setDefaultPushCallback(this, MainActivity.class);
-		ParseInstallation.getCurrentInstallation().saveInBackground();
-		ParseAnalytics.trackAppOpened(getIntent());
-//		ParseAnalytics.trackAppOpened(getIntent());
-//		ParseObject testObject = new ParseObject("TestObject");
-//		testObject.put("foo", "bar");
-//		testObject.saveInBackground(new SaveCallback() {
-//			
-//			@Override
-//			public void done(ParseException e) {
-//				// TODO Auto-generated method stub
-//				Toast t = Toast.makeText(MainActivity.this, "saved", 2);
-//				t.show();
-//			}
-//		});
 			
 		// adjust the action bar layout with one on the left and one on the
 		// right

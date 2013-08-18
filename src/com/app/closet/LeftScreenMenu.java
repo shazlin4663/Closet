@@ -1,5 +1,7 @@
 package com.app.closet;
 
+import com.parse.ParseUser;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -32,6 +34,16 @@ public class LeftScreenMenu extends LinearLayout {
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
 
+		Button btnLogout = (Button) findViewById(R.id.btnLogout);
+		btnLogout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ParseUser.logOut();
+				Activity context = (Activity) getContext();
+				context.finish();
+			}
+		});
 		Button btnAddCloth = (Button) findViewById(R.id.btnCloth);
 		btnAddCloth.setOnClickListener(new OnClickListener() {
 			
