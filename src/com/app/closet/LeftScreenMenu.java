@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 public class LeftScreenMenu extends LinearLayout {
 	public static int optionImageIndex;
 	
+	
+	
 	public LeftScreenMenu(Context context) {
 		super(context);
 	}
@@ -62,6 +64,20 @@ public class LeftScreenMenu extends LinearLayout {
 				
 			}
 		});
+		
+		Button btnAddAny = (Button) findViewById(R.id.btnCrop);
+		btnAddAny.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Activity context = (Activity) getContext();
+				
+				
+				Intent intent = new Intent(context, CropActivity.class);
+				context.startActivityForResult(intent, 101);
+			}
+		});
+		
 	}
 	
 	private void addImage () {
