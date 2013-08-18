@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class ItemsAdapter extends BaseAdapter {
-	Context _context;
-	List<String> _list;
+	private Context _context;
+	private List<String> _list;
 	
 	public ItemsAdapter (Context context, List<String> list) {
 		_context = context;

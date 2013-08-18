@@ -2,7 +2,6 @@ package com.app.closet;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,17 +10,35 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-public class MyPagerAdapter extends PagerAdapter{
 
-	List<Bitmap> _listBitmap = new ArrayList<Bitmap>();
-	Context _context;
-	Bitmap bitmapImage;
+public class MyPagerAdapter extends PagerAdapter{
+	private List<Bitmap> _listBitmap = new ArrayList<Bitmap>();
+	private Context _context;
+	public static final String FULL_SCREEN_IMAGE = "FullScreenImage";
+	
+	private final class ImageOnClickListener implements OnClickListener {
+		private Bitmap _bitmapImage;
+		
+		public ImageOnClickListener (Bitmap bitmapImage) {
+			_bitmapImage = bitmapImage;
+		}
+		
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(_context, FullScreenImage.class);
+			Bundle extras = new Bundle();
+			extras.putParcelable(FULL_SCREEN_IMAGE, _bitmapImage);
+			intent.putExtras(extras);
+			
+			_context.startActivity(intent);
+		}
+	}
+
 	public MyPagerAdapter (List<Bitmap> listBitmap, Context context){
 		_listBitmap = listBitmap;
 		_context = context;
@@ -41,11 +58,11 @@ public class MyPagerAdapter extends PagerAdapter{
 	@Override
 	public float getPageWidth(int position) {
 		// TODO Auto-generated method stub
-		return 0.5f;
+		return 1f;
 	}
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		bitmapImage = _listBitmap.get(position);
+		Bitmap bitmapImage = _listBitmap.get(position);
 		
 		LayoutInflater inflater = LayoutInflater.from(_context);
 		View view = inflater.inflate(R.layout.imageview_layout_for_viewpager, null);
@@ -54,18 +71,7 @@ public class MyPagerAdapter extends PagerAdapter{
 		ivImage.setScaleType(ImageView.ScaleType.CENTER_CROP);		
 		ivImage.setImageBitmap(createImageBorder(bitmapImage));
 		
-		ivImage.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(_context, FullScreenImage.class);
-				Bundle extras = new Bundle();
-				extras.putParcelable("FullImage", bitmapImage);
-				intent.putExtras(extras);
-				
-				_context.startActivity(intent);
-			}
-		});
+		ivImage.setOnClickListener(new ImageOnClickListener(bitmapImage));
 		
 		container.addView(view);
 		return view;

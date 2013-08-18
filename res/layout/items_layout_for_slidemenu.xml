@@ -5,7 +5,7 @@
     
     <ImageView 
         android:id = "@+id/ivFace"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/friend_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/NoImage"/>
