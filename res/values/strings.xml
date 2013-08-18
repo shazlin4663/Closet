@@ -3,10 +3,14 @@
 
     <string name="app_name">Closet</string>
     <string name="action_settings">Settings</string>
-    <string name = "friend"> Friend</string>
-    <string name = "NoImage">No Image</string>
-    <string name = "username">Username</string>
-    <string name ="addCloth">Add Cloth</string>
-    <string name ="addPant">Add Pant</string>
-    <string name ="addOther">Add Other</string>
+    <string name="friend"> Friend</string>
+    <string name="NoImage">No Image</string>
+    <string name="username">Username</string>
+    <string name="addCloth">Add Top</string>
+    <string name="addPant">Add Pant</string>
+    <string name="addOther">Add Other</string>
+    <string name="addCrop">Add Picture</string>
+    <string name="title_activity_crop">CropActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
