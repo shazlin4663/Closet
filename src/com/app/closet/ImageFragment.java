@@ -29,7 +29,7 @@ public class ImageFragment extends Fragment {
 		Bitmap bitImage = getArguments().getParcelable(EXTRA_MESSAGE);
 		View view = inflater.inflate(R.layout.imageview_layout_for_viewpager, container, false);
 	
-		ImageView imageView = (ImageView) view.findViewById(R.id.tvImage);
+		ImageView imageView = (ImageView) view.findViewById(R.id.ivImage);
 		imageView.setAdjustViewBounds(true);
 		imageView.setMinimumHeight(300);
 		imageView.setMinimumWidth(600);

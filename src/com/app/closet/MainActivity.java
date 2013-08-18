@@ -31,11 +31,11 @@ public class MainActivity extends SherlockFragmentActivity {
 	private SlidingMenu setUpLeftMenu, setUpRightMenu;
 	private Button btnLeftMenu;
 	private ImageView ivRightMenu;
-	private PagerAdapter clothPageAdapter, pantPageAdapter, otherPageAdapter;
-	private List<Fragment> listClothFragment = new ArrayList<Fragment>();
-	private List<Fragment> listPantFragment = new ArrayList<Fragment>();
-	private List<Fragment> listOtherFragment = new ArrayList<Fragment>();
-	
+	private MyPagerAdapter clothPageAdapter, pantPageAdapter, otherPageAdapter;
+	private List<Bitmap> listClothFragment = new ArrayList<Bitmap>();
+	private List<Bitmap> listPantFragment = new ArrayList<Bitmap>();
+	private List<Bitmap> listOtherFragment = new ArrayList<Bitmap>();
+	ViewPager pagerCloth;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,36 +72,19 @@ public class MainActivity extends SherlockFragmentActivity {
 		createLeftMenu();
 		createRightMenu();
 		
-		ViewPager pagerCloth = (ViewPager)findViewById(R.id.viewPager);
-		clothPageAdapter = new PagerAdapter(getSupportFragmentManager(), listClothFragment, MainActivity.this);
+		pagerCloth = (ViewPager)findViewById(R.id.viewPager);
+		clothPageAdapter = new MyPagerAdapter(listClothFragment, MainActivity.this);
 		pagerCloth.setAdapter(clothPageAdapter);
 		
 		ViewPager pagerPant = (ViewPager)findViewById(R.id.viewpagerPant);
-		pantPageAdapter = new PagerAdapter(getSupportFragmentManager(), listPantFragment, MainActivity.this);
+		pantPageAdapter = new MyPagerAdapter(listPantFragment, MainActivity.this);
 		pagerPant.setAdapter(pantPageAdapter);
-
+		pagerPant.setPadding(0, 5, 0, 0);
+		
 		ViewPager pagerOther = (ViewPager)findViewById(R.id.viewpagerOther);
-		otherPageAdapter = new PagerAdapter(getSupportFragmentManager(), listOtherFragment, MainActivity.this);
+		otherPageAdapter = new MyPagerAdapter(listOtherFragment, MainActivity.this);
 		pagerOther.setAdapter(otherPageAdapter);
-//		
-//	pagerCloth.setOnClickListener(new OnClickListener() {
-//		
-//		@Override
-//		public void onClick(View v) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(MainActivity.this, FullScreenImage.class);
-//			startActivity(intent);
-//		}
-//	});
-////		pagerCloth.setOnTouchListener(new OnTouchListener() {
-////			
-////			@Override
-////			public boolean onTouch(View v, MotionEvent event) {
-////				Intent intent = new Intent(MainActivity.this, FullScreenImage.class);
-////				startActivity(intent);
-////				return false;
-////			}
-////		});
+		pagerOther.setPadding(0, 5, 0, 0);
 	}
 	
 	private void createLeftMenu() {
@@ -140,12 +123,6 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -157,15 +134,15 @@ public class MainActivity extends SherlockFragmentActivity {
 				
 				switch (LeftScreenMenu.optionImageIndex) {
 				case 0:
-					listClothFragment.add(ImageFragment.newInstance(image));
+					listClothFragment.add(image);
 					clothPageAdapter.notifyDataSetChanged();
 					break;
 				case 1:
-					listPantFragment.add(ImageFragment.newInstance(image));
+					listPantFragment.add(image);
 					pantPageAdapter.notifyDataSetChanged();
 					break;
 				case 2:
-					listOtherFragment.add(ImageFragment.newInstance(image));
+					listOtherFragment.add(image);
 					otherPageAdapter.notifyDataSetChanged();
 					break;
 				}	

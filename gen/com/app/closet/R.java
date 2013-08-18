@@ -1097,6 +1097,7 @@ containing a value of this type.
         public static final int homeAsUp=0x7f040006;
         public static final int ivFace=0x7f040042;
         public static final int ivFullImage=0x7f040040;
+        public static final int ivImage=0x7f040041;
         public static final int ivRightMenu=0x7f040037;
         public static final int left=0x7f040010;
         public static final int listMode=0x7f040002;
@@ -1111,7 +1112,6 @@ containing a value of this type.
         public static final int showTitle=0x7f040007;
         public static final int slidingmenumain=0x7f040044;
         public static final int tabMode=0x7f040003;
-        public static final int tvImage=0x7f040041;
         public static final int tvshowName=0x7f040043;
         public static final int useLogo=0x7f040004;
         public static final int viewPager=0x7f04003c;

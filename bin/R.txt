@@ -329,6 +329,7 @@ int id fullscreen 0x7f040013
 int id homeAsUp 0x7f040006
 int id ivFace 0x7f040042
 int id ivFullImage 0x7f040040
+int id ivImage 0x7f040041
 int id ivRightMenu 0x7f040037
 int id left 0x7f040010
 int id listMode 0x7f040002
@@ -343,7 +344,6 @@ int id showHome 0x7f040005
 int id showTitle 0x7f040007
 int id slidingmenumain 0x7f040044
 int id tabMode 0x7f040003
-int id tvImage 0x7f040041
 int id tvshowName 0x7f040043
 int id useLogo 0x7f040004
 int id viewPager 0x7f04003c
