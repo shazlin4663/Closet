@@ -1,5 +1,13 @@
 package com.app.closet;
 
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.PushService;
+import com.parse.SaveCallback;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -31,7 +41,24 @@ public class MainActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
-
+		
+		Parse.initialize(MainActivity.this, "closet", "app");
+		PushService.setDefaultPushCallback(this, MainActivity.class);
+		ParseInstallation.getCurrentInstallation().saveInBackground();
+		ParseAnalytics.trackAppOpened(getIntent());
+//		ParseAnalytics.trackAppOpened(getIntent());
+//		ParseObject testObject = new ParseObject("TestObject");
+//		testObject.put("foo", "bar");
+//		testObject.saveInBackground(new SaveCallback() {
+//			
+//			@Override
+//			public void done(ParseException e) {
+//				// TODO Auto-generated method stub
+//				Toast t = Toast.makeText(MainActivity.this, "saved", 2);
+//				t.show();
+//			}
+//		});
+			
 		// adjust the action bar layout with one on the left and one on the
 		// right
 		View customizeActionBarView = LayoutInflater.from(this).inflate(
@@ -81,6 +108,8 @@ public class MainActivity extends SherlockFragmentActivity {
 				MainActivity.this);
 		pagerOther.setAdapter(otherPageAdapter);
 		pagerOther.setPadding(0, 5, 0, 0);
+		
+	
 	}
 
 	private void createLeftMenu() {
