@@ -3,6 +3,17 @@
 
     <string name="app_name">Closet</string>
     <string name="action_settings">Settings</string>
+<<<<<<< HEAD
+    <string name = "friend"> Friend</string>
+    <string name = "NoImage">No Image</string>
+    <string name = "username">Enter Username</string>
+    <string name = "password">Enter Password</string>
+    <string name = "login">Login</string>
+    <string name = "signup">Sign up</string>
+    <string name ="addCloth">Add Cloth</string>
+    <string name ="addPant">Add Pant</string>
+    <string name ="addOther">Add Other</string>
+=======
     <string name="friend"> Friend</string>
     <string name="NoImage">No Image</string>
     <string name="username">Username</string>
@@ -13,4 +24,5 @@
     <string name="title_activity_crop">CropActivity</string>
     <string name="hello_world">Hello world!</string>
 
+>>>>>>> development
 </resources>
