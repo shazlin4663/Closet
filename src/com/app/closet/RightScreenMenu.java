@@ -36,7 +36,7 @@ public class RightScreenMenu extends LinearLayout {
 		super.onFinishInflate();
 		
 		
-		lvView = (ListView) findViewById(R.id.lvOther);
+		lvView = (ListView) findViewById(R.id.lvFriend);
 		list.add("Eric");
 		list.add("lin");
 		
@@ -44,7 +44,4 @@ public class RightScreenMenu extends LinearLayout {
 		lvView.setAdapter(itemAdapter);
 
 	}	
-
-
-	
 }
