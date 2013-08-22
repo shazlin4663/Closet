@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.parse.ParseUser;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -36,6 +38,7 @@ public class CropActivity extends Activity {
     private ImageView mImageView;
     private File      mFileTemp;
     private Bitmap mFinalBitmap;
+    private ParseUser parseUser;
 
     private LinearLayout buttonGroupTop;
     private LinearLayout buttonGroup1 ;
@@ -45,7 +48,7 @@ public class CropActivity extends Activity {
 
         super.onCreate(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
         setContentView(R.layout.activity_crop);
-        
+        parseUser = ParseUser.getCurrentUser();
         buttonGroupTop = (LinearLayout) findViewById(R.id.buttonGroupTop);
         buttonGroup1 = (LinearLayout) findViewById(R.id.buttonGroup1);
         buttonGroup2 = (LinearLayout) findViewById(R.id.buttonGroup2);
@@ -73,9 +76,7 @@ public class CropActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				
+				setResultAndFinish(Types.Top);
 			}
 		});
         
@@ -85,9 +86,7 @@ public class CropActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				
+				setResultAndFinish(Types.Bottom);
 			}
 		});
 
@@ -97,9 +96,7 @@ public class CropActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				
+				setResultAndFinish(Types.Shoe);
 			}
 		});
         
@@ -110,8 +107,7 @@ public class CropActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
-				
+				setResultAndFinish(Types.Accessory);
 			}
 		});
         
@@ -125,6 +121,15 @@ public class CropActivity extends Activity {
     		mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
     	}
 
+    }
+    
+    private void setResultAndFinish(Types types)
+    {
+    	Intent res = new Intent();
+    	res.putExtra("image", mFinalBitmap);
+    	res.putExtra("type", types.name());
+    	setResult(RESULT_OK, res); 
+    	finish();
     }
 
     private void takePicture() {
@@ -213,7 +218,10 @@ public class CropActivity extends Activity {
                     return;
                 }
 
-                bitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
+        
+              
+                bitmap = CompressImage.decodeSampledBitmapFromFile(mFileTemp.getPath());
+                
                 mImageView.setImageBitmap(bitmap);
                 mFinalBitmap = bitmap;
                 

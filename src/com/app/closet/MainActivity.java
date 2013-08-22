@@ -1,49 +1,132 @@
 package com.app.closet;
 
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.PushService;
-import com.parse.SaveCallback;
-
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class MainActivity extends SherlockFragmentActivity {
 	private SlidingMenu setUpLeftMenu, setUpRightMenu;
 	private ImageView ivRightMenu, ivLeftMenu;
-	private MyPagerAdapter clothPageAdapter, pantPageAdapter, otherPageAdapter;
-	private List<Bitmap> listClothFragment = new ArrayList<Bitmap>();
-	private List<Bitmap> listPantFragment = new ArrayList<Bitmap>();
-	private List<Bitmap> listOtherFragment = new ArrayList<Bitmap>();
+	private MyPagerAdapter topPageAdapter, bottomPageAdapter, shoePageAdapter,
+			accessoryPageAdapter;
+	private List<Bitmap> listTop = new ArrayList<Bitmap>();
+	private List<Bitmap> listBottom = new ArrayList<Bitmap>();
+	private List<Bitmap> listShoe = new ArrayList<Bitmap>();
+	private List<Bitmap> listAccessory = new ArrayList<Bitmap>();
+	private ParseUser parseUser;
+	private static int clothCount = 0, pantCount = 0, shoeCount = 0;
+	String title;
+	List<ParseObject> list;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
-			
-		// adjust the action bar layout with one on the left and one on the
-		// right
+
+		Parse.initialize(MainActivity.this, LoginActivity.APPLICATION_ID,
+				LoginActivity.CLIENT_KEY);
+		parseUser = ParseUser.getCurrentUser();
+
+		ParseObject parseObj = parseUser.getParseObject("Closet");
+		try {
+			ParseObject fetch = parseObj.fetchIfNeeded();
+
+			JSONArray jArrayCloset = fetch.containsKey("closet_items") ? fetch
+					.getJSONArray("closet_items") : new JSONArray();
+
+			for (int x = 0; x < jArrayCloset.length(); x++) {
+				JSONObject closetItem;
+
+				try {
+					closetItem = jArrayCloset.getJSONObject(x);
+					String closetItemID = closetItem.getString("objectId");
+					ParseQuery<ParseObject> query = ParseQuery
+							.getQuery("closet_item");
+					query.getInBackground(closetItemID,
+							new GetCallback<ParseObject>() {
+
+								@Override
+								public void done(ParseObject object,
+										ParseException e) {
+									if (e == null) {
+										ParseFile file = object
+												.getParseFile("Image");
+										try {
+											byte[] b = file.getData();
+											Bitmap image = BitmapFactory
+													.decodeByteArray(b, 0,
+															b.length);
+											String type = object
+													.getString("Type");
+
+											if (Types.Top.name().equals(type)) {
+												listTop.add(image);
+												topPageAdapter
+														.notifyDataSetChanged();
+											} else if (Types.Bottom.name()
+													.equals(type)) {
+												listBottom.add(image);
+												bottomPageAdapter
+														.notifyDataSetChanged();
+											} else if (Types.Shoe.name()
+													.equals(type)) {
+												listShoe.add(image);
+												shoePageAdapter
+														.notifyDataSetChanged();
+											} else if (Types.Accessory.name()
+													.equals(type)) {
+												listAccessory.add(image);
+											}
+
+										} catch (ParseException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
+
+								}
+							});
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
 		View customizeActionBarView = LayoutInflater.from(this).inflate(
 				R.layout.action_bar_layout, null);
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
@@ -75,24 +158,23 @@ public class MainActivity extends SherlockFragmentActivity {
 		createRightMenu();
 		createLeftMenu();
 
-		ViewPager pagerCloth = (ViewPager) findViewById(R.id.viewPager);
-		clothPageAdapter = new MyPagerAdapter(listClothFragment,
-				MainActivity.this);
-		pagerCloth.setAdapter(clothPageAdapter);
+		ViewPager pagerTop = (ViewPager) findViewById(R.id.viewPagerTop);
+		topPageAdapter = new MyPagerAdapter(listTop, MainActivity.this);
+		pagerTop.setAdapter(topPageAdapter);
 
-		ViewPager pagerPant = (ViewPager) findViewById(R.id.viewpagerPant);
-		pantPageAdapter = new MyPagerAdapter(listPantFragment,
-				MainActivity.this);
-		pagerPant.setAdapter(pantPageAdapter);
-		pagerPant.setPadding(0, 5, 0, 0);
+		ViewPager pagerBottom = (ViewPager) findViewById(R.id.viewpagerBottom);
+		bottomPageAdapter = new MyPagerAdapter(listBottom, MainActivity.this);
+		pagerBottom.setAdapter(bottomPageAdapter);
+		pagerBottom.setPadding(0, 5, 0, 0);
 
-		ViewPager pagerOther = (ViewPager) findViewById(R.id.viewpagerOther);
-		otherPageAdapter = new MyPagerAdapter(listOtherFragment,
-				MainActivity.this);
-		pagerOther.setAdapter(otherPageAdapter);
-		pagerOther.setPadding(0, 5, 0, 0);
-		
-	
+		ViewPager pagerShoe = (ViewPager) findViewById(R.id.viewpagerShoe);
+		shoePageAdapter = new MyPagerAdapter(listShoe, MainActivity.this);
+		pagerShoe.setAdapter(shoePageAdapter);
+		pagerShoe.setPadding(0, 5, 0, 0);
+		ViewPager pagerAccessory = (ViewPager) findViewById(R.id.viewpagerAccessory);
+		shoePageAdapter = new MyPagerAdapter(listShoe, MainActivity.this);
+		pagerAccessory.setAdapter(accessoryPageAdapter);
+		pagerAccessory.setPadding(0, 5, 0, 0);
 	}
 
 	private void createLeftMenu() {
@@ -114,7 +196,6 @@ public class MainActivity extends SherlockFragmentActivity {
 		menu.setShadowDrawable(R.drawable.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.50f);
-		// menu.setBackgroundColor(getResources().getColor(R.color.aqua));
 		menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 		return menu;
 	}
@@ -131,33 +212,44 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		ParseObject parseObject = null;
+		if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+			Bitmap image = data.getParcelableExtra("image");
+			String type = data.getStringExtra("type");
+			ParseFile parseFile = new ParseFile("images.png",
+					convertBitmapToByteArray(image));
+			parseFile.saveInBackground();
 
-		if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-			String result = data.toUri(0);
-			try {
-				InputStream is = getContentResolver().openInputStream(
-						Uri.parse(result));
-				Bitmap image = CompressImage.decodeSampledBitmapFromResource(
-						is, 600, 200);
-
-				switch (LeftScreenMenu.optionImageIndex) {
-				case 0:
-					listClothFragment.add(image);
-					clothPageAdapter.notifyDataSetChanged();
-					break;
-				case 1:
-					listPantFragment.add(image);
-					pantPageAdapter.notifyDataSetChanged();
-					break;
-				case 2:
-					listOtherFragment.add(image);
-					otherPageAdapter.notifyDataSetChanged();
-					break;
+			
+				parseObject = parseUser.getParseObject("Closet");
+				ParseObject closetItem = new ParseObject("closet_item");
+				closetItem.put("Type", type);
+				closetItem.put("Image", parseFile);
+				parseObject.add("closet_items", closetItem);
+				parseObject.saveInBackground();
+				
+				if (Types.Top.name().equals(type)) {
+					listTop.add(image);
+					topPageAdapter.notifyDataSetChanged();
 				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				else if (Types.Bottom.name().equals(type)) {
+					listBottom.add(image);
+					bottomPageAdapter.notifyDataSetChanged();
+				}
+				else if (Types.Shoe.name().equals(type)) {
+					listShoe.add(image);
+					shoePageAdapter.notifyDataSetChanged();
+				}
+				else if (Types.Accessory.name().equals(type)) {
+					listAccessory.add(image);
+					accessoryPageAdapter.notifyDataSetChanged();
+				}
 		}
+	}
+
+	private byte[] convertBitmapToByteArray(Bitmap bitmap) {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		bitmap.compress(CompressFormat.PNG, 0, bos);
+		return bos.toByteArray();
 	}
 }

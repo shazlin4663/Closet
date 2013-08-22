@@ -14,4 +14,5 @@
     <string name ="addOther">Add Other</string>
     <string name="addCrop">Add Picture</string>
     <string name="title_activity_crop">CropActivity</string>
+    <string name = "title">Welcome to the Closet</string>
 </resources>
