@@ -26,8 +26,8 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		Parse.initialize(LoginActivity.this,
-				"gkUziEKoasseFn4K0NYshWZ0k5I8U1s0rXn3bM95",
-				"xbndxbqkx9tnqk7deYskhIcfHctzWS0hbinJ7VNe");
+				"oN5bb0TVbdKMa7Hxws8kHUqw5T5muZltxnFNkaRK",
+				"519GBB9lefNbw70KZFDqFH8XR0sQAYMLEPRcQcwy");
 
 		setContentView(R.layout.login_screen_layout);
 

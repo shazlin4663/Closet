@@ -84,7 +84,6 @@ public class LeftScreenMenu extends LinearLayout {
 			public void onClick(View v) {
 				Activity context = (Activity) getContext();
 				
-				
 				Intent intent = new Intent(context, CropActivity.class);
 				context.startActivityForResult(intent, 101);
 			}
