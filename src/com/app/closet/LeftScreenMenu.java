@@ -15,8 +15,6 @@ import android.widget.LinearLayout;
 public class LeftScreenMenu extends LinearLayout {
 	public static int optionImageIndex;
 	
-	
-	
 	public LeftScreenMenu(Context context) {
 		super(context);
 	}
@@ -73,7 +71,6 @@ public class LeftScreenMenu extends LinearLayout {
 			public void onClick(View v) {
 				addImage();
 				optionImageIndex = 2;
-				
 			}
 		});
 		
@@ -83,7 +80,6 @@ public class LeftScreenMenu extends LinearLayout {
 			@Override
 			public void onClick(View v) {
 				Activity context = (Activity) getContext();
-				
 				
 				Intent intent = new Intent(context, CropActivity.class);
 				context.startActivityForResult(intent, 101);

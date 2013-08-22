@@ -3,9 +3,9 @@ package com.app.closet;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,15 +19,17 @@ public class LoginActivity extends Activity {
 
 	private Button btnLogin, btnSignup;
 	private EditText etUsername, etPassword;
+	public static final String APPLICATION_ID = "oN5bb0TVbdKMa7Hxws8kHUqw5T5muZltxnFNkaRK";
+	public static final String CLIENT_KEY = "519GBB9lefNbw70KZFDqFH8XR0sQAYMLEPRcQcwy";
+	private ParseUser parseUser;
+	public static ImageData imageData = new ImageData();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
-		Parse.initialize(LoginActivity.this,
-				"gkUziEKoasseFn4K0NYshWZ0k5I8U1s0rXn3bM95",
-				"xbndxbqkx9tnqk7deYskhIcfHctzWS0hbinJ7VNe");
+//		ParseObject.registerSubclass(ImageData.class);
+		Parse.initialize(LoginActivity.this, APPLICATION_ID, CLIENT_KEY);
 
 		setContentView(R.layout.login_screen_layout);
 
@@ -39,7 +41,17 @@ public class LoginActivity extends Activity {
 		btnLogin.setOnClickListener(new LoginListener());
 		btnSignup.setOnClickListener(new SignupListener());
 	}
-
+	private void showToast (String message) {
+		Toast toast = Toast.makeText(LoginActivity.this,
+				message, Toast.LENGTH_LONG);
+		toast.show();
+	}
+	private void createParseObject () {
+		imageData.setParseCloth(new ParseObject("ClothImage"));
+		imageData.setParsePant(new ParseObject("PantImage"));
+		imageData.setParseShoe(new ParseObject("ShoeImage"));
+		imageData.setParseAccessory(new ParseObject("AccessoryImage"));
+	}
 	private final class SignupListener implements OnClickListener {
 
 		@Override
@@ -58,27 +70,26 @@ public class LoginActivity extends Activity {
 					@Override
 					public void done(ParseException e) {
 						if (e == null) {
-							Toast t = Toast.makeText(LoginActivity.this,
-									"success signup", 2);
-							t.show();
-							startActivity(new Intent(LoginActivity.this,
-									MainActivity.class));
-
-						} else {
-							Toast t = Toast.makeText(LoginActivity.this,
-									"failed signup", 2);
-							t.show();
-
-						}
+							showToast("You have sign up successful.");
+							startActivity(new Intent(LoginActivity.this, MainActivity.class));
+							
+							etUsername.setText("");
+							etPassword.setText("");
+							
+							
+//							createParseObject();
+//							
+							ParseObject closet = new ParseObject("Closet");
+							
+							parseUser = ParseUser.getCurrentUser();
+							parseUser.put("Closet", closet);			
+							parseUser.saveInBackground();
+						} else 
+							showToast("The username has been used.");
 					}
 				});
-			} else {
-				Toast t = Toast.makeText(LoginActivity.this,
-						"Enter username and password", 2);
-				t.show();
-			}
-			etUsername.setText("");
-			etPassword.setText("");
+			} else 
+				showToast("Please Enter username and password");
 		}
 	}
 
@@ -95,30 +106,19 @@ public class LoginActivity extends Activity {
 
 							@Override
 							public void done(ParseUser user, ParseException e) {
-								// TODO Auto-generated method stub
-								if (user != null) {
-									Toast t = Toast.makeText(
-											LoginActivity.this,
-											"success Login", 2);
-									t.show();
+								if (user != null) { 
+									showToast("SignIn successful");
 									startActivity(new Intent(
 											LoginActivity.this,
 											MainActivity.class));
-
-								} else {
-									Toast t = Toast.makeText(
-											LoginActivity.this, "Failed Login",
-											2);
-									t.show();
-								}
+									etUsername.setText("");
+									etPassword.setText("");
+								} else 
+									showToast("Failed Login-Enter correct username and password");
 							}
 						});
-			} else {
-				Toast t = Toast.makeText(LoginActivity.this,
-						"Eneter username and password", 2);
-				t.show();
-
-			}
+			} else 
+				showToast("Please Enter username and password");
 		}
 	}
 }

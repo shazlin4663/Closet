@@ -20,24 +20,6 @@ public class MyPagerAdapter extends PagerAdapter{
 	private List<Bitmap> _listBitmap = new ArrayList<Bitmap>();
 	private Context _context;
 	public static final String FULL_SCREEN_IMAGE = "FullScreenImage";
-	
-	private final class ImageOnClickListener implements OnClickListener {
-		private Bitmap _bitmapImage;
-		
-		public ImageOnClickListener (Bitmap bitmapImage) {
-			_bitmapImage = bitmapImage;
-		}
-		
-		@Override
-		public void onClick(View v) {
-			Intent intent = new Intent(_context, FullScreenImage.class);
-			Bundle extras = new Bundle();
-			extras.putParcelable(FULL_SCREEN_IMAGE, _bitmapImage);
-			intent.putExtras(extras);
-			
-			_context.startActivity(intent);
-		}
-	}
 
 	public MyPagerAdapter (List<Bitmap> listBitmap, Context context){
 		_listBitmap = listBitmap;
@@ -58,7 +40,12 @@ public class MyPagerAdapter extends PagerAdapter{
 	@Override
 	public float getPageWidth(int position) {
 		// TODO Auto-generated method stub
-		return 1f;
+		return 0.5f;
+	}
+	@Override
+	public void destroyItem(ViewGroup container, int position, Object object) {
+		// TODO Auto-generated method stub
+		container.removeView((View) object);
 	}
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
@@ -76,13 +63,24 @@ public class MyPagerAdapter extends PagerAdapter{
 		container.addView(view);
 		return view;
 	}
-	@Override
-	public void destroyItem(ViewGroup container, int position, Object object) {
-		// TODO Auto-generated method stub
-	//	super.destroyItem(container, position, object);
-		container.removeViewAt(position);
+	
+	private final class ImageOnClickListener implements OnClickListener {
+		private Bitmap _bitmapImage;
+		
+		public ImageOnClickListener (Bitmap bitmapImage) {
+			_bitmapImage = bitmapImage;
+		}
+		
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(_context, FullScreenImage.class);
+			Bundle extras = new Bundle();
+			extras.putParcelable(FULL_SCREEN_IMAGE, _bitmapImage);
+			intent.putExtras(extras);
+			
+			_context.startActivity(intent);
+		}
 	}
-
 	private Bitmap createImageBorder(Bitmap bitmap) {
 		final int BORDER_WIDTH = 10;
 	    final int BORDER_COLOR = Color.WHITE;
