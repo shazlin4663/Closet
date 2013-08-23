@@ -15,4 +15,9 @@
     <string name="addCrop">Add Picture</string>
     <string name="title_activity_crop">CropActivity</string>
     <string name = "title">Welcome to the Closet</string>
+    <string name = "name">Enter your name</string>
+    <string name = "email">Your Email Address</string>
+    <string name = "registration"> Registration</string>
+    <string name = "resetPassword"> Reset Password</string>
+    <string name = "send"> Send </string>
 </resources>
