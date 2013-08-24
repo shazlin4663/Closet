@@ -28,7 +28,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-//		ParseObject.registerSubclass(ImageData.class);
+		// ParseObject.registerSubclass(ImageData.class);
 		Parse.initialize(LoginActivity.this, APPLICATION_ID, CLIENT_KEY);
 
 		setContentView(R.layout.login_screen_layout);
@@ -40,7 +40,8 @@ public class LoginActivity extends Activity {
 
 		btnLogin.setOnClickListener(new LoginListener());
 		btnSignup.setOnClickListener(new SignupListener());
-	}
+		}
+	
 	private void showToast (String message) {
 		Toast toast = Toast.makeText(LoginActivity.this,
 				message, Toast.LENGTH_LONG);

@@ -36,8 +36,7 @@ import com.parse.ParseUser;
 public class MainActivity extends SherlockFragmentActivity {
 	private SlidingMenu setUpLeftMenu, setUpRightMenu;
 	private ImageView ivRightMenu, ivLeftMenu;
-	private MyPagerAdapter topPageAdapter, bottomPageAdapter, shoePageAdapter,
-			accessoryAdapter;
+	private MyPagerAdapter topPageAdapter, bottomPageAdapter, shoePageAdapter, accessoryPageAdapter;
 	private List<Bitmap> listTop = new ArrayList<Bitmap>();
 	private List<Bitmap> listBottom = new ArrayList<Bitmap>();
 	private List<Bitmap> listShoe = new ArrayList<Bitmap>();
@@ -60,10 +59,9 @@ public class MainActivity extends SherlockFragmentActivity {
 		ParseObject parseObj = parseUser.getParseObject("Closet");
 		try {
 			ParseObject fetch = parseObj.fetchIfNeeded();
-			
-			JSONArray jArrayCloset = fetch.containsKey("closet_items") ?
-										fetch.getJSONArray("closet_items") :
-										new JSONArray();
+
+			JSONArray jArrayCloset = fetch.containsKey("closet_items") ? fetch
+					.getJSONArray("closet_items") : new JSONArray();
 
 			for (int x = 0; x < jArrayCloset.length(); x++) {
 				JSONObject closetItem;
@@ -107,6 +105,7 @@ public class MainActivity extends SherlockFragmentActivity {
 											} else if (Types.Accessory.name()
 													.equals(type)) {
 												listAccessory.add(image);
+												accessoryPageAdapter.notifyDataSetChanged();
 											}
 
 										} catch (ParseException e1) {
@@ -159,19 +158,24 @@ public class MainActivity extends SherlockFragmentActivity {
 		createRightMenu();
 		createLeftMenu();
 
-		ViewPager pagerCloth = (ViewPager) findViewById(R.id.viewPager);
+		ViewPager pagerTop = (ViewPager) findViewById(R.id.viewPagerTop);
 		topPageAdapter = new MyPagerAdapter(listTop, MainActivity.this);
-		pagerCloth.setAdapter(topPageAdapter);
+		pagerTop.setAdapter(topPageAdapter);
 
-		ViewPager pagerPant = (ViewPager) findViewById(R.id.viewpagerPant);
+		ViewPager pagerBottom = (ViewPager) findViewById(R.id.viewpagerBottom);
 		bottomPageAdapter = new MyPagerAdapter(listBottom, MainActivity.this);
-		pagerPant.setAdapter(bottomPageAdapter);
-		pagerPant.setPadding(0, 5, 0, 0);
+		pagerBottom.setAdapter(bottomPageAdapter);
+		pagerBottom.setPadding(0, 5, 0, 0);
 
-		ViewPager pagerOther = (ViewPager) findViewById(R.id.viewpagerOther);
+		ViewPager pagerShoe = (ViewPager) findViewById(R.id.viewpagerShoe);
 		shoePageAdapter = new MyPagerAdapter(listShoe, MainActivity.this);
-		pagerOther.setAdapter(shoePageAdapter);
-		pagerOther.setPadding(0, 5, 0, 0);
+		pagerShoe.setAdapter(shoePageAdapter);
+		pagerShoe.setPadding(0, 5, 0, 0);
+		
+		ViewPager pagerAccessory = (ViewPager) findViewById(R.id.viewpagerAccessory);
+		accessoryPageAdapter = new MyPagerAdapter(listAccessory, MainActivity.this);
+		pagerAccessory.setAdapter(accessoryPageAdapter);
+		pagerAccessory.setPadding(0, 5, 0, 0);
 	}
 
 	private void createLeftMenu() {
@@ -210,53 +214,37 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		ParseObject parseObject = null;
-		if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-			String result = data.toUri(0);
-			ParseFile parseFile;
-			try {
-				InputStream is = getContentResolver().openInputStream(
-						Uri.parse(result));
-				Bitmap image = CompressImage.decodeSampledBitmapFromResource(
-						is, 600, 200);
-				parseFile = new ParseFile("images.png",
-						convertBitmapToByteArray(image));
-				parseFile.saveInBackground();
+		if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+			Bitmap image = data.getParcelableExtra("image");
+			String type = data.getStringExtra("type");
+			ParseFile parseFile = new ParseFile("images.png",
+					convertBitmapToByteArray(image));
+			parseFile.saveInBackground();
 
-				switch (LeftScreenMenu.optionImageIndex) {
-				case 0:
-					parseObject = parseUser.getParseObject("Closet");
-					ParseObject closetItem = new ParseObject("closet_item");
-					closetItem.put("Type", "Top");
-					closetItem.put("Image", parseFile);
-					parseObject.add("closet_items", closetItem);
-					parseObject.saveInBackground();
-
+			
+				parseObject = parseUser.getParseObject("Closet");
+				ParseObject closetItem = new ParseObject("closet_item");
+				closetItem.put("Type", type);
+				closetItem.put("Image", parseFile);
+				parseObject.add("closet_items", closetItem);
+				parseObject.saveInBackground();
+				
+				if (Types.Top.name().equals(type)) {
 					listTop.add(image);
 					topPageAdapter.notifyDataSetChanged();
-					break;
-				case 1:
-					parseObject = parseUser.getParseObject("PantImage");
-					parseObject.put("pant" + pantCount++, parseFile);
-					parseObject.saveInBackground();
-
+				}
+				else if (Types.Bottom.name().equals(type)) {
 					listBottom.add(image);
 					bottomPageAdapter.notifyDataSetChanged();
-					break;
-				case 2:
-					parseObject = parseUser.getParseObject("ShoeImage");
-					parseObject.put("shoe" + shoeCount++, parseFile);
-					parseObject.saveInBackground();
-
+				}
+				else if (Types.Shoe.name().equals(type)) {
 					listShoe.add(image);
 					shoePageAdapter.notifyDataSetChanged();
-					break;
-
 				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+				else if (Types.Accessory.name().equals(type)) {
+					listAccessory.add(image);
+					accessoryPageAdapter.notifyDataSetChanged();
+				}
 		}
 	}
 
