@@ -20,5 +20,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/addOther"/>
+    
+    <Button 
+        android:id = "@+id/btnCrop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addCrop"/>
 
+     <Button 
+        android:id = "@+id/btnLogout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"/>
+    
 </com.app.closet.LeftScreenMenu>

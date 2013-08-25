@@ -2,33 +2,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp" >
 
     <ImageView
         android:id="@+id/ivRightMenu"
         android:layout_width="?attr/actionBarSize"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="?attr/actionBarItemBackground"
-        android:src="@drawable/friend_icon"
-        android:contentDescription="@string/NoImage"/>
-    
-    <ImageView 
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height = "fill_parent"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerInside"
         android:contentDescription="@string/NoImage"
-        android:src="@drawable/ic_launcher"/>
-    
-    <Button
-        android:id="@+id/btnLeftMenu"
+        android:src="@drawable/friend_icon" />
+
+    <ImageView
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/NoImage"
+        android:scaleType="centerInside"
+        android:src="@drawable/add_picture_icon" />
+
+    <ImageView
+        android:id="@+id/ivLeftMenu"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="?attr/actionBarItemBackground"
-        android:text= "@string/action_settings"/>
+        android:contentDescription="@string/NoImage"
+        android:src="@drawable/setting_icon" />
+
+    <ImageView
+        android:id="@+id/ivAddFriend"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/ivRightMenu"
+        android:background="?attr/actionBarItemBackground"
+        android:contentDescription="@string/NoImage"
+        android:src="@drawable/add_friend_icon" />
 
 </RelativeLayout>
