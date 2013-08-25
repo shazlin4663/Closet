@@ -31,6 +31,6 @@
         android:id = "@+id/btnLogout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"/>
+        android:text="@string/logout"/>
     
 </com.app.closet.LeftScreenMenu>

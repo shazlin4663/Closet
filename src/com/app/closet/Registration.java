@@ -1,5 +1,7 @@
 package com.app.closet;
 
+import java.util.Locale;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -62,10 +64,12 @@ public class Registration extends Activity {
 								etEmail.setText("");
 								
 								ParseObject closet = new ParseObject("Closet");
-								
+								ParseObject friend = new ParseObject("Friends");
 								parseUser = ParseUser.getCurrentUser();
 								parseUser.put("Name", name);
-								parseUser.put("Closet", closet);			
+								parseUser.put("SecondaryName", name.toLowerCase(Locale.US));
+								parseUser.put("Closet", closet);
+								parseUser.put("friends", friend);
 								parseUser.saveInBackground();
 								finish();
 							} else 

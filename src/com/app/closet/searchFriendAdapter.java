@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ItemsAdapter extends BaseAdapter {
+public class searchFriendAdapter extends BaseAdapter {
 	private Context _context;
-	private List<ParseUser> _list;
+	private List<String> _list;
 	
-	public ItemsAdapter (Context context, List<ParseUser> list) {
+	public searchFriendAdapter (Context context, List<String> list) {
 		_context = context;
 		_list = list;
 	}
@@ -43,9 +43,8 @@ public class ItemsAdapter extends BaseAdapter {
 		View itemView = layoutInflater.inflate(R.layout.items_layout_for_slidemenu, null);
 		
 		TextView tvUsername = (TextView) itemView.findViewById(R.id.tvshowName);
-		ParseUser user = _list.get(position);
 		
-		tvUsername.setText(user.getString("Name"));
+		tvUsername.setText(_list.get(position));
 		tvUsername.setShadowLayer(2, 1, 1, R.color.gray);
 		return itemView;
 	}

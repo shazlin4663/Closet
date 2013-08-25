@@ -33,6 +33,18 @@ public class CompressImage {
 		return inSampleSize;
 	}
 
+	
+	public static Bitmap decodeSampledBitmapFromFile(String path){
+		
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inSampleSize = 8;
+		
+		
+		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+		
+		return bitmap;
+	}
+	
 	public static Bitmap decodeSampledBitmapFromResource(InputStream is,
 			int reqWidth, int reqHeight) {
 		// First decode with inJustDecodeBounds=true to check dimensions

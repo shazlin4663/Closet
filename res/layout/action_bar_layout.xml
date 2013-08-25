@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/ivRightMenu"
         android:layout_width="?attr/actionBarSize"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="?attr/actionBarItemBackground"
@@ -16,20 +16,30 @@
 
     <ImageView
         android:layout_width="?attr/actionBarSize"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/NoImage"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/add_picture_icon" />
 
     <ImageView
         android:id="@+id/ivLeftMenu"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="?attr/actionBarItemBackground"
         android:contentDescription="@string/NoImage"
         android:src="@drawable/setting_icon" />
+
+    <ImageView
+        android:id="@+id/ivAddFriend"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/ivRightMenu"
+        android:background="?attr/actionBarItemBackground"
+        android:contentDescription="@string/NoImage"
+        android:src="@drawable/add_friend_icon" />
 
 </RelativeLayout>

@@ -20,6 +20,7 @@
         android:layout_below="@id/tvText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
+        android:text="hj"
         android:hint="@string/username" />
 
     <EditText
@@ -29,6 +30,7 @@
         android:layout_below="@id/etUsername"
         android:layout_centerInParent="true"
         android:hint="@string/password"
+        android:text="hj"
         android:inputType="textPassword" />
 
     <Button
