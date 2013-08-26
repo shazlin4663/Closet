@@ -13,6 +13,16 @@
         android:text="@string/title"
         android:textSize="40sp" />
 
+    <TextView
+        android:id="@+id/tvShowError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvText"
+        android:layout_centerHorizontal="true"
+        android:text="@string/showError"
+        android:textColor="@color/red"
+        android:visibility="gone" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="200dp"
@@ -20,8 +30,8 @@
         android:layout_below="@id/tvText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="hj"
-        android:hint="@string/username" />
+        android:hint="@string/username"
+        android:text="test" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -30,8 +40,8 @@
         android:layout_below="@id/etUsername"
         android:layout_centerInParent="true"
         android:hint="@string/password"
-        android:text="hj"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="test" />
 
     <Button
         android:id="@+id/btnSignup"

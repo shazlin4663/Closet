@@ -28,11 +28,9 @@ import android.widget.ListView;
 
 @SuppressLint("NewApi")
 public class RightScreenMenu extends LinearLayout {
-
-	private List<ParseUser>	list	= new ArrayList<ParseUser>();
-	private List<String> 	listID = new ArrayList<String>();
-	private ListView		lvView;
-	private ItemsAdapter	itemAdapter;
+	private List<ParseUser>	_listOfFriends	= new ArrayList<ParseUser>();
+	private ListView		_lvView;
+	private ItemsAdapter	_itemAdapter;
 
 	public RightScreenMenu(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -50,13 +48,15 @@ public class RightScreenMenu extends LinearLayout {
 	}
 
 	public void updateUI() {
+		
 		updateData();
-		if (itemAdapter != null)
-			itemAdapter.notifyDataSetChanged();
+		
+		if (_itemAdapter != null)
+			_itemAdapter.notifyDataSetChanged();
 	}
 
 	private void updateData() {
-		list.clear();
+		_listOfFriends.clear();
 		
 		ParseUser user = ParseUser.getCurrentUser();
 		ParseObject getFriend = user.getParseObject("friends");
@@ -86,9 +86,9 @@ public class RightScreenMenu extends LinearLayout {
 									@Override
 									public void done(ParseObject innerobject, ParseException e) {
 										if (e == null) {
-											list.add((ParseUser)innerobject);
+											_listOfFriends.add((ParseUser)innerobject);
 											
-											itemAdapter.notifyDataSetChanged();
+											_itemAdapter.notifyDataSetChanged();
 										}
 
 									}
@@ -111,19 +111,22 @@ public class RightScreenMenu extends LinearLayout {
 	protected void onFinishInflate() {
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
-		lvView = (ListView) findViewById(R.id.lvFriend);
-		itemAdapter = new ItemsAdapter(getContext(), list);
-		lvView.setAdapter(itemAdapter);
+		
+		_lvView = (ListView) findViewById(R.id.lvFriend);
+		_itemAdapter = new ItemsAdapter(getContext(), _listOfFriends);
+		_lvView.setAdapter(_itemAdapter);
+		
 		updateData();	
 		
-		lvView.setOnItemClickListener(new OnItemClickListener() {
+		_lvView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Activity context = (Activity) getContext();
 				Intent intent = new Intent(context, MainActivity.class);
-				ParseUser user = list.get(arg2);
-				intent.putExtra("FRIEND_ID", user.getObjectId());
+				ParseUser user = _listOfFriends.get(arg2);
+				
+				intent.putExtra(MainActivity.INTENT_NAME, user.getObjectId());
 				context.startActivity(intent);
 				
 			}});

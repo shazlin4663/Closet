@@ -13,22 +13,22 @@ import android.widget.TextView;
 
 public class ItemsAdapter extends BaseAdapter {
 	private Context _context;
-	private List<ParseUser> _list;
+	private List<ParseUser> _listName;
 	
 	public ItemsAdapter (Context context, List<ParseUser> list) {
 		_context = context;
-		_list = list;
+		_listName = list;
 	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return _list.size();
+		return _listName.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return _list.get(position);
+		return _listName.get(position);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ItemsAdapter extends BaseAdapter {
 		View itemView = layoutInflater.inflate(R.layout.items_layout_for_slidemenu, null);
 		
 		TextView tvUsername = (TextView) itemView.findViewById(R.id.tvshowName);
-		ParseUser user = _list.get(position);
+		ParseUser user = _listName.get(position);
 		
 		tvUsername.setText(user.getString("Name"));
 		tvUsername.setShadowLayer(2, 1, 1, R.color.gray);

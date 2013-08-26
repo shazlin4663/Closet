@@ -46,8 +46,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	private List<Bitmap>	listShoe		= new ArrayList<Bitmap>();
 	private List<Bitmap>	listAccessory	= new ArrayList<Bitmap>();
 	private ParseUser		parseUser;
-	private List<ParseObject>		list;
 	private RightScreenMenu rightScreenMenu;
+	public static final String INTENT_NAME = "FRIEND_ID";
 	
 	public void getUserData () {
 		ParseObject parseObj = parseUser.getParseObject("Closet");

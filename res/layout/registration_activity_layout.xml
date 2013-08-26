@@ -4,10 +4,21 @@
     android:layout_height="match_parent"
     android:layout_marginTop="20dp" >
 
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/errorField"
+        android:textColor="@color/red"
+        android:visibility="gone" />
+    
     <EditText
         android:id="@+id/etRegisterName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tvShowError"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:hint="@string/name" />
 

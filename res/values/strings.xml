@@ -24,7 +24,10 @@
     <string name="gallery"> From Gallery</string>
     <string name="picture">Take Picture</string>
     <string name="top">Top</string>
-    <string name ="bottom">Bottom</string>
-	<string name = "shoe">Shoe</string>
-	<string name = "accessory">Accessory</string>
+    <string name="bottom">Bottom</string>
+    <string name="shoe">Shoe</string>
+    <string name="accessory">Accessory</string>
+    <string name="showError"> Please enter correct username and password</string>
+    <string name= "errorField"> Please fill out all the fields </string>
+
 </resources>
