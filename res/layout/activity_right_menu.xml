@@ -6,7 +6,7 @@
     android:paddingLeft="15dp" >
 
     <ListView
-        android:id="@+id/lvOther"
+        android:id="@+id/lvFriend"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
     </ListView>

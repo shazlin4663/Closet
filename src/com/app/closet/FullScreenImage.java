@@ -8,16 +8,17 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 public class FullScreenImage extends Activity {
-	ImageView ivImage;
+	private ImageView ivImage;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.full_image_layout);
 		
 		Bundle extras = getIntent().getExtras();
-		Bitmap map = (Bitmap) extras.getParcelable("FullImage");
+		Bitmap map = (Bitmap) extras.getParcelable(MyPagerAdapter.FULL_SCREEN_IMAGE);
 		
-		setContentView(R.layout.full_image_layout);
 		ivImage = (ImageView) findViewById(R.id.ivFullImage);
 		ivImage.setImageBitmap(map);
 		
@@ -29,5 +30,4 @@ public class FullScreenImage extends Activity {
 			}
 		});
 	}
-
 }

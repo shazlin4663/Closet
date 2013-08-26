@@ -2,6 +2,8 @@ package com.app.closet;
 
 import java.util.List;
 
+import com.parse.ParseUser;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class ItemsAdapter extends BaseAdapter {
-	Context _context;
-	List<String> _list;
+	private Context _context;
+	private List<ParseUser> _list;
 	
-	public ItemsAdapter (Context context, List<String> list) {
+	public ItemsAdapter (Context context, List<ParseUser> list) {
 		_context = context;
 		_list = list;
 	}
@@ -41,8 +43,9 @@ public class ItemsAdapter extends BaseAdapter {
 		View itemView = layoutInflater.inflate(R.layout.items_layout_for_slidemenu, null);
 		
 		TextView tvUsername = (TextView) itemView.findViewById(R.id.tvshowName);
+		ParseUser user = _list.get(position);
 		
-		tvUsername.setText(_list.get(position));
+		tvUsername.setText(user.getString("Name"));
 		tvUsername.setShadowLayer(2, 1, 1, R.color.gray);
 		return itemView;
 	}
