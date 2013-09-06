@@ -19,8 +19,6 @@ public class LoginActivity extends Activity {
 
 	private Button btnLogin, btnSignup;
 	private EditText etUsername, etPassword;
-	public static final String APPLICATION_ID = "oN5bb0TVbdKMa7Hxws8kHUqw5T5muZltxnFNkaRK";
-	public static final String CLIENT_KEY = "519GBB9lefNbw70KZFDqFH8XR0sQAYMLEPRcQcwy";
 	private ParseUser parseUser;
 	public static ImageData imageData = new ImageData();
 
@@ -29,7 +27,6 @@ public class LoginActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		// ParseObject.registerSubclass(ImageData.class);
-		Parse.initialize(LoginActivity.this, APPLICATION_ID, CLIENT_KEY);
 
 		setContentView(R.layout.login_screen_layout);
 

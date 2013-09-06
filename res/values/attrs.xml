@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="TabWidget">
 
-        <!-- Drawable <attr name="divider" format="reference"/> used to draw the divider between tabs. -->
-        
+    <declare-styleable name="Gallery">
+        <attr name="android:galleryItemBackground"></attr>
+    </declare-styleable>
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="buttonBarStyle" format="reference" />
+        <attr name="buttonBarButtonStyle" format="reference" />
+    </declare-styleable>
+
+	 <declare-styleable name="TabWidget">
+
+        <!-- Drawable used to draw the divider between tabs. -->
         <!-- Determines whether the strip under the tab indicators is drawn or not. -->
         <attr name="tabStripEnabled" format="boolean"/>
         <!-- Drawable used to draw the left part of the strip underneath the tabs. -->
@@ -15,4 +23,6 @@
 
     </declare-styleable>
 
+	
+	
 </resources>

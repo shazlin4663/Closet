@@ -45,6 +45,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	private static int clothCount = 0, pantCount = 0, shoeCount = 0;
 	String title;
 	List<ParseObject> list;
+	ViewPager pagerTop, pagerBottom, pagerShoe, pagerAccessory;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.activity_main);
 
-		Parse.initialize(MainActivity.this, LoginActivity.APPLICATION_ID,
-				LoginActivity.CLIENT_KEY);
 		parseUser = ParseUser.getCurrentUser();
 
 		ParseObject parseObj = parseUser.getParseObject("Closet");
@@ -158,21 +157,21 @@ public class MainActivity extends SherlockFragmentActivity {
 		createRightMenu();
 		createLeftMenu();
 
-		ViewPager pagerTop = (ViewPager) findViewById(R.id.viewPagerTop);
+		pagerTop = (ViewPager) findViewById(R.id.viewPagerTop);
 		topPageAdapter = new MyPagerAdapter(listTop, MainActivity.this);
 		pagerTop.setAdapter(topPageAdapter);
-
-		ViewPager pagerBottom = (ViewPager) findViewById(R.id.viewpagerBottom);
+		
+		pagerBottom = (ViewPager) findViewById(R.id.viewpagerBottom);
 		bottomPageAdapter = new MyPagerAdapter(listBottom, MainActivity.this);
 		pagerBottom.setAdapter(bottomPageAdapter);
 		pagerBottom.setPadding(0, 5, 0, 0);
 
-		ViewPager pagerShoe = (ViewPager) findViewById(R.id.viewpagerShoe);
+		pagerShoe = (ViewPager) findViewById(R.id.viewpagerShoe);
 		shoePageAdapter = new MyPagerAdapter(listShoe, MainActivity.this);
 		pagerShoe.setAdapter(shoePageAdapter);
 		pagerShoe.setPadding(0, 5, 0, 0);
 		
-		ViewPager pagerAccessory = (ViewPager) findViewById(R.id.viewpagerAccessory);
+		pagerAccessory = (ViewPager) findViewById(R.id.viewpagerAccessory);
 		accessoryPageAdapter = new MyPagerAdapter(listAccessory, MainActivity.this);
 		pagerAccessory.setAdapter(accessoryPageAdapter);
 		pagerAccessory.setPadding(0, 5, 0, 0);

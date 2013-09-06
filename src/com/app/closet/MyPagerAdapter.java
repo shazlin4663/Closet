@@ -40,7 +40,7 @@ public class MyPagerAdapter extends PagerAdapter{
 	@Override
 	public float getPageWidth(int position) {
 		// TODO Auto-generated method stub
-		return 0.5f;
+		return 0.4f;
 	}
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
@@ -57,7 +57,7 @@ public class MyPagerAdapter extends PagerAdapter{
 		
 		ivImage.setScaleType(ImageView.ScaleType.CENTER_CROP);		
 		ivImage.setImageBitmap(createImageBorder(bitmapImage));
-		
+		ivImage.setPadding(20, 0, 20, 0);
 		ivImage.setOnClickListener(new ImageOnClickListener(bitmapImage));
 		
 		container.addView(view);

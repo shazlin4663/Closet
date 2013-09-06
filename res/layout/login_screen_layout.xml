@@ -2,22 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="@string/title"
+        android:textSize="40sp" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tvText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
+        android:text="hj"
         android:hint="@string/username" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_below="@id/etUsername"
+        android:layout_centerInParent="true"
         android:hint="@string/password"
+        android:text="hj"
         android:inputType="textPassword" />
 
     <Button
@@ -26,15 +38,23 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnLogin"
         android:layout_alignBottom="@+id/btnLogin"
-        android:layout_alignRight="@+id/etPassword"
+        android:layout_toRightOf="@+id/btnLogin"
         android:text="@string/signup" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnResetPassword"
         android:layout_below="@+id/etPassword"
-        android:layout_toLeftOf="@+id/btnSignup"
         android:text="@string/login" />
+
+    <Button
+        android:id="@+id/btnResetPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSignup"
+        android:layout_centerInParent="true"
+        android:text="@string/resetPassword" />
 
 </RelativeLayout>
