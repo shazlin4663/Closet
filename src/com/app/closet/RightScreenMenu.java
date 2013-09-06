@@ -12,6 +12,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -26,7 +27,9 @@ public class RightScreenMenu extends LinearLayout {
 	private List<ParseUser>	_listOfFriends	= new ArrayList<ParseUser>();
 	private ListView		_lvView;
 	private ItemsAdapter	_itemAdapter;
-
+	private ProgressDialog		_progressDialog;
+	private Activity _context = (Activity) getContext();
+	
 	public RightScreenMenu(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		// TODO Auto-generated constructor stub
@@ -43,11 +46,15 @@ public class RightScreenMenu extends LinearLayout {
 	}
 
 	public void updateUI() {
-		
+		_context = (Activity) getContext();
+		_progressDialog = ProgressDialog.show(_context, "", "Loading");
 		updateData();
 		
 		if (_itemAdapter != null)
 			_itemAdapter.notifyDataSetChanged();
+	
+		if (_progressDialog.isShowing() && _progressDialog != null)
+			_progressDialog.dismiss();
 	}
 
 	private void updateData() {
@@ -57,6 +64,7 @@ public class RightScreenMenu extends LinearLayout {
 		ParseObject getFriend = user.getParseObject("friends");
 		
 		try {
+			user.refresh();
 			ParseObject fetchFriend = getFriend.fetchIfNeeded();
 			JSONArray friendArray = fetchFriend.containsKey("FriendList") ? fetchFriend.getJSONArray("FriendList")
 					: new JSONArray();
@@ -116,12 +124,12 @@ public class RightScreenMenu extends LinearLayout {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Activity context = (Activity) getContext();
-				Intent intent = new Intent(context, MainActivity.class);
+				_context = (Activity) getContext();
+				Intent intent = new Intent(_context, MainActivity.class);
 				ParseUser user = _listOfFriends.get(arg2);
 				
 				intent.putExtra(MainActivity.INTENT_KEY, user.getObjectId());
-				context.startActivity(intent);
+				_context.startActivity(intent);
 			}});
 	}
 }

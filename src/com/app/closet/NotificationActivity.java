@@ -69,88 +69,10 @@ public class NotificationActivity extends Activity {
 		_notificationAdatper = new NotificationAdapter(NotificationActivity.this, _listNotification);
 		_listview.setAdapter(_notificationAdatper);
 	}
-
-	/*
-	 * _btnNotNow = (Button) findViewById(R.id.btnNotNow); _btnConfirm =
-	 * (Button) findViewById(R.id.btnConfirm); _ivFaceImage = (ImageView)
-	 * findViewById(R.id.ivImage); _tvShowText = (TextView)
-	 * findViewById(R.id.tvText);
-	 * 
-	 * _btnConfirm.setOnClickListener(new ConfirmFriend());
-	 * _btnNotNow.setOnClickListener(new OnClickListener() {
-	 * 
-	 * @Override public void onClick(View v) {
-	 * 
-	 * } }); }
-	 * 
-	 * 
-	 * 
-	 * private class ConfirmFriend implements OnClickListener {
-	 * 
-	 * @Override public void onClick(View v) { addRequestUser();
-	 * addCurrentUser(); }
-	 * 
-	 * }
-	 * 
-	 * private void addRequestUser() { ParseQuery<ParseUser> query =
-	 * ParseUser.getQuery(); query.whereEqualTo("objectId", _requestUserId);
-	 * query.getFirstInBackground(new GetCallback<ParseUser>() {
-	 * 
-	 * @Override public void done(ParseUser object, ParseException e) { if (e ==
-	 * null) { ParseObject userObject = object.getParseObject("friends");
-	 * 
-	 * try { userObject.refresh(); } catch (ParseException e1) {
-	 * e1.printStackTrace(); }
-	 * 
-	 * final ParseObject friendList = new ParseObject("FriendID");
-	 * friendList.put("friendsID", _currentUser.getObjectId());
-	 * userObject.addUnique("FriendList", friendList);
-	 * userObject.saveInBackground();
-	 * 
-	 * } else { // something went wrong }
-	 * 
-	 * } }); }
-	 * 
-	 * private void addCurrentUser() { final ParseObject currentUser =
-	 * _currentUser.getParseObject("friends");
-	 * 
-	 * try { currentUser.refresh(); } catch (ParseException e1) {
-	 * e1.printStackTrace(); }
-	 * 
-	 * Log.i("tag", "request: " + _requestUserId + "\n" + "currentID:" +
-	 * currentUser.getObjectId());
-	 * 
-	 * final ParseObject friendList = new ParseObject("FriendID");
-	 * friendList.put("friendsID", _requestUserId);
-	 * friendList.saveInBackground(new SaveCallback() {
-	 * 
-	 * @Override public void done(ParseException e) {
-	 * currentUser.addUnique("FriendList", friendList);
-	 * 
-	 * _dialog = ProgressDialog.show(NotificationActivity.this, "",
-	 * LoginActivity.DIALOG_MESSAGE);
-	 * 
-	 * currentUser.saveInBackground(new SaveCallback() {
-	 * 
-	 * @Override public void done(ParseException e) { if (_dialog != null &&
-	 * _dialog.isShowing()) _dialog.dismiss();
-	 * 
-	 * finish(); } });
-	 * 
-	 * } }); }
-	 */
-
+	
 	@Override
 	protected void onResume() {
 		NotificationUserInformation userInfo;
-	/*	if (NotificationAdapter.checkRemove == true) {
-			int[] position = NotificationAdapter.getRemovePosition;
-			for (int x = 0; x < position.length; x++) {
-				_listNotification.remove(position[x]);
-			}
-			NotificationAdapter.checkRemove = false;
-		}
-		*/
 		try {
 			for (int x = 0; x < PushReceiver.dataCount; x++) {
 				SharedPreferences pref = getSharedPreferences(PREF, 0);

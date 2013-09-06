@@ -24,6 +24,7 @@ public class LeftScreenMenu extends LinearLayout {
 	private Bitmap			_profilePicture;
 	private ProgressDialog	_progressDialog;
 	private Activity _context;
+	
 	public LeftScreenMenu(Context context) {
 		super(context);
 	}
