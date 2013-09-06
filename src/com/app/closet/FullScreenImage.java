@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 public class FullScreenImage extends Activity {
-	private ImageView ivImage;
+	private ImageView _ivImage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +19,10 @@ public class FullScreenImage extends Activity {
 		Bundle extras = getIntent().getExtras();
 		Bitmap map = (Bitmap) extras.getParcelable(MyPagerAdapter.FULL_SCREEN_IMAGE);
 		
-		ivImage = (ImageView) findViewById(R.id.ivFullImage);
-		ivImage.setImageBitmap(map);
+		_ivImage = (ImageView) findViewById(R.id.ivFullImage);
+		_ivImage.setImageBitmap(map);
 		
-		ivImage.setOnClickListener(new OnClickListener() {
+		_ivImage.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

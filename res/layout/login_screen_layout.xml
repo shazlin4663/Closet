@@ -1,50 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/teal">
+    android:layout_height="match_parent"
+    android:background="@color/teal" >
 
-    <TextView 
-        android:id ="@+id/tvText"
+    <TextView
+        android:id="@+id/tvText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="40sp"
         android:gravity="center_horizontal"
-        android:text = "@string/title"/>
-    
+        android:text="@string/title"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/tvShowError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvText"
+        android:layout_centerHorizontal="true"
+        android:text="@string/showError"
+        android:textColor="@color/red"
+        android:visibility="gone" />
+
     <EditText
         android:id="@+id/etUsername"
-        android:layout_marginTop="40dp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvText"
         android:layout_centerHorizontal="true"
-        android:hint="@string/username" />
+        android:layout_marginTop="40dp"
+        android:hint="@string/username"
+        android:text="test" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_below="@id/etUsername"
-        android:hint="@string/password"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_below="@id/etPassword"
-        android:text="@string/login" />
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:text="test" />
 
     <Button
         android:id="@+id/btnSignup"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/btnLogin"
+        android:layout_alignBaseline="@+id/btnLogin"
+        android:layout_alignBottom="@+id/btnLogin"
+        android:layout_toRightOf="@+id/btnLogin"
         android:text="@string/signup" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnResetPassword"
+        android:layout_below="@+id/etPassword"
+        android:text="@string/login" />
+
+    <Button
+        android:id="@+id/btnResetPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSignup"
+        android:layout_centerInParent="true"
+        android:text="@string/resetPassword" />
 
 </RelativeLayout>

@@ -42,11 +42,13 @@ public class MyPagerAdapter extends PagerAdapter{
 		// TODO Auto-generated method stub
 		return 0.5f;
 	}
+	
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		// TODO Auto-generated method stub
 		container.removeView((View) object);
 	}
+	
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
 		Bitmap bitmapImage = _listBitmap.get(position);

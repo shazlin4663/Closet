@@ -13,8 +13,7 @@ import android.widget.LinearLayout;
 
 @SuppressLint("NewApi")
 public class LeftScreenMenu extends LinearLayout {
-	public static int optionImageIndex;
-	
+
 	public LeftScreenMenu(Context context) {
 		super(context);
 	}
@@ -28,7 +27,7 @@ public class LeftScreenMenu extends LinearLayout {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	protected void onFinishInflate() {
 		// TODO Auto-generated method stub
@@ -36,7 +35,7 @@ public class LeftScreenMenu extends LinearLayout {
 
 		Button btnLogout = (Button) findViewById(R.id.btnLogout);
 		btnLogout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				ParseUser.logOut();
@@ -44,57 +43,17 @@ public class LeftScreenMenu extends LinearLayout {
 				context.finish();
 			}
 		});
-		Button btnAddCloth = (Button) findViewById(R.id.btnCloth);
-		btnAddCloth.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				addImage();
-				optionImageIndex = 0;
-			}
-		});
-		
-		Button btnAddPant = (Button) findViewById(R.id.btnPant);
-		btnAddPant.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				addImage();
-				optionImageIndex =1;	
-			}
-		});
-		
-		Button btnAddOther = (Button) findViewById(R.id.btnOther);
-		btnAddOther.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				addImage();
-				optionImageIndex = 2;
-			}
-		});
-		
+
 		Button btnAddAny = (Button) findViewById(R.id.btnCrop);
 		btnAddAny.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Activity context = (Activity) getContext();
-				
+
 				Intent intent = new Intent(context, CropActivity.class);
 				context.startActivityForResult(intent, 101);
 			}
 		});
-		
 	}
-	
-	private void addImage () {
-		Activity context = (Activity) getContext();
-		
-		Intent intent = new Intent();
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		context.startActivityForResult(Intent.createChooser(intent, "Select picture"),100);
-	}
-
 }

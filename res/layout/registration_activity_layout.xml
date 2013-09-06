@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp" >
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/errorField"
+        android:textColor="@color/red"
+        android:visibility="gone" />
+    
+    <EditText
+        android:id="@+id/etRegisterName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvShowError"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/name" />
+
+    <EditText
+        android:id="@+id/etRegisterEmail"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etRegisterName"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/etRegisterUsername"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etRegisterEmail"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/username" />
+
+    <EditText
+        android:id="@+id/etRegisterPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etRegisterUsername"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnRegisterSignUp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etRegisterPassword"
+        android:layout_centerHorizontal="true"
+        android:text="@string/registration" />
+
+</RelativeLayout>
