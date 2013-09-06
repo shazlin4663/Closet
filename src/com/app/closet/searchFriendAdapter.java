@@ -11,24 +11,24 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ItemsAdapter extends BaseAdapter {
+public class searchFriendAdapter extends BaseAdapter {
 	private Context _context;
-	private List<ParseUser> _listName;
+	private List<String> _list;
 	
-	public ItemsAdapter (Context context, List<ParseUser> list) {
+	public searchFriendAdapter (Context context, List<String> list) {
 		_context = context;
-		_listName = list;
+		_list = list;
 	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return _listName.size();
+		return _list.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return _listName.get(position);
+		return _list.get(position);
 	}
 
 	@Override
@@ -43,9 +43,8 @@ public class ItemsAdapter extends BaseAdapter {
 		View itemView = layoutInflater.inflate(R.layout.items_layout_for_slidemenu, null);
 		
 		TextView tvUsername = (TextView) itemView.findViewById(R.id.tvshowName);
-		ParseUser user = _listName.get(position);
 		
-		tvUsername.setText(user.getString("Name"));
+		tvUsername.setText(_list.get(position));
 		tvUsername.setShadowLayer(2, 1, 1, R.color.gray);
 		return itemView;
 	}

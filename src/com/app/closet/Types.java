@@ -4,5 +4,7 @@ public enum Types {
 	Top,
 	Bottom,
 	Shoe,
-	Accessory
+	Accessory,
+	Email,
+	Name
 }
