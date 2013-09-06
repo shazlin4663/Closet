@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/NoImage"
+        android:padding="1dp"
+        android:src="@drawable/default_friend_icon" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@id/ivImage"
+        android:layout_toLeftOf="@+id/btnNotNow"
+        android:text="Confirm" />
+
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnConfirm"
+        android:layout_toRightOf="@id/ivImage"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/btnNotNow"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvText"
+        android:layout_marginRight="16dp"
+        android:text="Not Now" />
+
+</RelativeLayout>

@@ -18,7 +18,7 @@
     <string name="name">Enter your name</string>
     <string name="email">Your Email Address</string>
     <string name="registration"> Registration</string>
-    <string name="resetPassword"> Reset Password</string>
+    <string name="resetPassword"> Forgot Password?</string>
     <string name="send"> Send </string>
     <string name="logout"> Logout</string>
     <string name="gallery"> From Gallery</string>
@@ -27,7 +27,14 @@
     <string name="bottom">Bottom</string>
     <string name="shoe">Shoe</string>
     <string name="accessory">Accessory</string>
-    <string name="showError"> Please enter correct username and password</string>
-    <string name= "errorField"> Please fill out all the fields </string>
+    <string name="showError">Invalid ID or Password</string>
+    <string name= "errorField">Please fill out all the fields </string>
+    <string name = "dialogTitle">Edit</string>
+	<string name = "viewPassword">Password:</string>
+	<string name = "viewName">Name:</string>
+	<string name = "viewEmail">Email:</string>
+	<string name = "changePassword">Change Password </string>
+	<string name = "updateProfile">Update Profile</string>
+	<string name = "tapEdit">Tap the text or picture to edit</string>
 
 </resources>

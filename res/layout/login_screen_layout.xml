@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/teal" >
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/tvText"
@@ -31,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:hint="@string/username"
-        android:text="test" />
+        android:text="li" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -41,7 +40,7 @@
         android:layout_centerInParent="true"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:text="test" />
+        android:text="li" />
 
     <Button
         android:id="@+id/btnSignup"

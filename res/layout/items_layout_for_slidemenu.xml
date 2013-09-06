@@ -6,8 +6,9 @@
     <ImageView 
         android:id = "@+id/ivFace"
         android:src="@drawable/default_friend_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="1dp"
         android:contentDescription="@string/NoImage"/>
     
     <TextView
@@ -15,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginLeft="7dp"
         android:layout_toRightOf="@id/ivFace"
         android:text="@string/username"
         android:textSize="20sp" />

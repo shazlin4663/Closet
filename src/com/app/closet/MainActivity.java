@@ -11,13 +11,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,31 +29,38 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 public class MainActivity extends SherlockFragmentActivity {
-	private SlidingMenu		setUpLeftMenu, setUpRightMenu;
-	private ImageView		ivRightMenu, ivLeftMenu, ivAddFriend;
-	private MyPagerAdapter	topPageAdapter, bottomPageAdapter, shoePageAdapter, accessoryPageAdapter;
-	private List<Bitmap>	listTop			= new ArrayList<Bitmap>();
-	private List<Bitmap>	listBottom		= new ArrayList<Bitmap>();
-	private List<Bitmap>	listShoe		= new ArrayList<Bitmap>();
-	private List<Bitmap>	listAccessory	= new ArrayList<Bitmap>();
-	private ParseUser		parseUser;
-	private RightScreenMenu rightScreenMenu;
-	public static final String INTENT_NAME = "FRIEND_ID";
-	
-	public void getUserData () {
-		ParseObject parseObj = parseUser.getParseObject("Closet");
+	private SlidingMenu			_setUpLeftMenu, _setUpRightMenu;
+	private ImageView			_ivRightMenu, _ivLeftMenu, _ivAddFriend;
+	private MyPagerAdapter		_topPageAdapter, _bottomPageAdapter, _shoePageAdapter, _accessoryPageAdapter;
+	private List<Bitmap>		_listTop		= new ArrayList<Bitmap>();
+	private List<Bitmap>		_listBottom		= new ArrayList<Bitmap>();
+	private List<Bitmap>		_listShoe		= new ArrayList<Bitmap>();
+	private List<Bitmap>		_listAccessory	= new ArrayList<Bitmap>();
+	private ParseUser			_parseUser;
+	private RightScreenMenu		_rightScreenMenu;
+	public static final String	INTENT_KEY		= "FRIEND_ID";
+	private UserData		_userInfo;
+	private ProgressDialog		_progressDialog;
+
+	public void getUserData() {
+		ParseObject parseObj = _parseUser.getParseObject(UserData.OBJECT_CLOSET_KEY);
 		try {
 			ParseObject fetch = parseObj.fetchIfNeeded();
 
@@ -62,7 +72,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 				try {
 					closetItem = jArrayCloset.getJSONObject(x);
-					String closetItemID = closetItem.getString("objectId");
+					String closetItemID = closetItem.getString(UserData.USER_ID_KEY);
 					ParseQuery<ParseObject> query = ParseQuery.getQuery("closet_item");
 					query.getInBackground(closetItemID, new GetCallback<ParseObject>() {
 
@@ -76,20 +86,20 @@ public class MainActivity extends SherlockFragmentActivity {
 									String type = object.getString("Type");
 
 									if (Types.Top.name().equals(type)) {
-										listTop.add(image);
-										topPageAdapter.notifyDataSetChanged();
+										_listTop.add(image);
+										_topPageAdapter.notifyDataSetChanged();
 									}
 									else if (Types.Bottom.name().equals(type)) {
-										listBottom.add(image);
-										bottomPageAdapter.notifyDataSetChanged();
+										_listBottom.add(image);
+										_bottomPageAdapter.notifyDataSetChanged();
 									}
 									else if (Types.Shoe.name().equals(type)) {
-										listShoe.add(image);
-										shoePageAdapter.notifyDataSetChanged();
+										_listShoe.add(image);
+										_shoePageAdapter.notifyDataSetChanged();
 									}
 									else if (Types.Accessory.name().equals(type)) {
-										listAccessory.add(image);
-										accessoryPageAdapter.notifyDataSetChanged();
+										_listAccessory.add(image);
+										_accessoryPageAdapter.notifyDataSetChanged();
 									}
 
 								} catch (ParseException e1) {
@@ -112,55 +122,101 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 
 	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
-			
+	//	_progressDialog = ProgressDialog.show(MainActivity.this, "", LoginActivity.DIALOG_MESSAGE);
+
+		PushService.setDefaultPushCallback(this, NotificationActivity.class);
+		ParseInstallation.getCurrentInstallation().saveInBackground();
+
 		Intent intent = getIntent();
-		String friendID = intent.getStringExtra("FRIEND_ID");
-		if (intent.hasExtra("FRIEND_ID")) {
+		String friendID = intent.getStringExtra(INTENT_KEY);
+		if (intent.hasExtra(INTENT_KEY)) {
 			ParseQuery<ParseUser> searchFriendID = ParseUser.getQuery();
-			searchFriendID.whereEqualTo("objectId", friendID);
+			searchFriendID.whereEqualTo(UserData.USER_ID_KEY, friendID);
 			searchFriendID.getFirstInBackground(new GetCallback<ParseUser>() {
-				
+
 				@Override
 				public void done(ParseUser object, ParseException e) {
-					parseUser = object;
+					_parseUser = object;
 					getUserData();
 				}
 			});
 		}
 		else {
-			parseUser = ParseUser.getCurrentUser();
+			_parseUser = ParseUser.getCurrentUser();
 			getUserData();
 			initalizeHomeScreen();
+			PushService.subscribe(MainActivity.this, "user_" + _parseUser.getObjectId(), MainActivity.class);
 		}
-
+		
 		ViewPager pagerTop = (ViewPager) findViewById(R.id.viewPagerTop);
-		topPageAdapter = new MyPagerAdapter(listTop, MainActivity.this);
-		pagerTop.setAdapter(topPageAdapter);
+		_topPageAdapter = new MyPagerAdapter(_listTop, MainActivity.this);
+		pagerTop.setAdapter(_topPageAdapter);
 
 		ViewPager pagerBottom = (ViewPager) findViewById(R.id.viewpagerBottom);
-		bottomPageAdapter = new MyPagerAdapter(listBottom, MainActivity.this);
-		pagerBottom.setAdapter(bottomPageAdapter);
+		_bottomPageAdapter = new MyPagerAdapter(_listBottom, MainActivity.this);
+		pagerBottom.setAdapter(_bottomPageAdapter);
 		pagerBottom.setPadding(0, 5, 0, 0);
 
 		ViewPager pagerShoe = (ViewPager) findViewById(R.id.viewpagerShoe);
-		shoePageAdapter = new MyPagerAdapter(listShoe, MainActivity.this);
-		pagerShoe.setAdapter(shoePageAdapter);
+		_shoePageAdapter = new MyPagerAdapter(_listShoe, MainActivity.this);
+		pagerShoe.setAdapter(_shoePageAdapter);
 		pagerShoe.setPadding(0, 5, 0, 0);
 
 		ViewPager pagerAccessory = (ViewPager) findViewById(R.id.viewpagerAccessory);
-		accessoryPageAdapter = new MyPagerAdapter(listAccessory, MainActivity.this);
-		pagerAccessory.setAdapter(accessoryPageAdapter);
+		_accessoryPageAdapter = new MyPagerAdapter(_listAccessory, MainActivity.this);
+		pagerAccessory.setAdapter(_accessoryPageAdapter);
 		pagerAccessory.setPadding(0, 5, 0, 0);
+
+/*		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				_progressDialog.dismiss();
+			}
+		}, 5000);*/
 	}
-	public void initalizeHomeScreen () {
+
+	@Override
+	protected void onResume() {
+	/*	try {
+			_parseUser.refresh();
+			ParseQuery<ParseObject> query = ParseQuery.getQuery(_parseUser.getClassName());
+			query.getInBackground(_parseUser.getObjectId(), new GetCallback<ParseObject>() {
+
+				@Override
+				public void done(ParseObject object, ParseException e) {
+					if (e == null) {
+						ParseFile file = (ParseFile) object.getParseFile(UserData.PROFILE_PICTURE);
+						file.getDataInBackground(new GetDataCallback() {
+
+							@Override
+							public void done(byte[] data, ParseException innerE) {
+								_userInfo.setImage(data);	
+							}
+						});
+						_userInfo.setUsername(object.getString(UserData.USERNAME));
+						_userInfo.setEmail(object.getString(UserData.EMAIL));
+						_userInfo.setName(object.getString(UserData.NAME));
+					}
+				}
+
+			});
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		super.onResume();
+	}
+
+	public void initalizeHomeScreen() {
 		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-		rightScreenMenu = (RightScreenMenu) inflater.inflate(R.layout.activity_right_menu, null);
-	
+		_rightScreenMenu = (RightScreenMenu) inflater.inflate(R.layout.activity_right_menu, null);
+
 		createRightMenu();
 		createLeftMenu();
 		View customizeActionBarView = LayoutInflater.from(this).inflate(R.layout.action_bar_layout, null);
@@ -170,11 +226,11 @@ public class MainActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setCustomView(customizeActionBarView);
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
 
-		ivLeftMenu = (ImageView) customizeActionBarView.findViewById(R.id.ivLeftMenu);
-		ivRightMenu = (ImageView) customizeActionBarView.findViewById(R.id.ivRightMenu);
-		ivAddFriend = (ImageView) customizeActionBarView.findViewById(R.id.ivAddFriend);
+		_ivLeftMenu = (ImageView) customizeActionBarView.findViewById(R.id.ivLeftMenu);
+		_ivRightMenu = (ImageView) customizeActionBarView.findViewById(R.id.ivRightMenu);
+		_ivAddFriend = (ImageView) customizeActionBarView.findViewById(R.id.ivAddFriend);
 
-		ivAddFriend.setOnClickListener(new OnClickListener() {
+		_ivAddFriend.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -182,45 +238,40 @@ public class MainActivity extends SherlockFragmentActivity {
 			}
 		});
 
-		ivLeftMenu.setOnClickListener(new OnClickListener() {
+		_ivLeftMenu.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setUpLeftMenu.toggle();
+				_setUpLeftMenu.toggle();
 			}
 		});
 
-		ivRightMenu.setOnClickListener(new OnClickListener() {
+		_ivRightMenu.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setUpRightMenu.toggle();
-
-
+				_setUpRightMenu.toggle();
 			}
 		});
-		setUpRightMenu.setOnOpenedListener(new OnOpenedListener() {	
+		_setUpRightMenu.setOnOpenedListener(new OnOpenedListener() {
 			@Override
 			public void onOpened() {
-				rightScreenMenu.updateUI();
-
+				_rightScreenMenu.updateUI();
 			}
-		
 		});
-		
-		
 	}
+
 	private void createLeftMenu() {
-		setUpLeftMenu = setUpMenu();
-		setUpLeftMenu.setMode(SlidingMenu.LEFT);
-		setUpLeftMenu.setMenu(R.layout.activity_left_menu);
+		_setUpLeftMenu = setUpMenu();
+		_setUpLeftMenu.setMode(SlidingMenu.LEFT);
+		_setUpLeftMenu.setMenu(R.layout.activity_left_menu);
 	}
 
 	private void createRightMenu() {
-		setUpRightMenu = setUpMenu();
-		setUpRightMenu.setMode(SlidingMenu.RIGHT);
-		setUpRightMenu.setMenu(rightScreenMenu);
-		
+		_setUpRightMenu = setUpMenu();
+		_setUpRightMenu.setMode(SlidingMenu.RIGHT);
+		_setUpRightMenu.setMenu(_rightScreenMenu);
+
 	}
 
 	private SlidingMenu setUpMenu() {
@@ -236,11 +287,20 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		// getMenuInflater().inflate(R.menu.main, menu);
+
 		com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_settings:
+
+				break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -255,7 +315,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			ParseFile parseFile = new ParseFile("images.png", convertBitmapToByteArray(image));
 			parseFile.saveInBackground();
 
-			parseObject = parseUser.getParseObject("Closet");
+			parseObject = _parseUser.getParseObject(UserData.OBJECT_CLOSET_KEY);
 			ParseObject closetItem = new ParseObject("closet_item");
 			closetItem.put("Type", type);
 			closetItem.put("Image", parseFile);
@@ -263,25 +323,25 @@ public class MainActivity extends SherlockFragmentActivity {
 			parseObject.saveInBackground();
 
 			if (Types.Top.name().equals(type)) {
-				listTop.add(image);
-				topPageAdapter.notifyDataSetChanged();
+				_listTop.add(image);
+				_topPageAdapter.notifyDataSetChanged();
 			}
 			else if (Types.Bottom.name().equals(type)) {
-				listBottom.add(image);
-				bottomPageAdapter.notifyDataSetChanged();
+				_listBottom.add(image);
+				_bottomPageAdapter.notifyDataSetChanged();
 			}
 			else if (Types.Shoe.name().equals(type)) {
-				listShoe.add(image);
-				shoePageAdapter.notifyDataSetChanged();
+				_listShoe.add(image);
+				_shoePageAdapter.notifyDataSetChanged();
 			}
 			else if (Types.Accessory.name().equals(type)) {
-				listAccessory.add(image);
-				accessoryPageAdapter.notifyDataSetChanged();
+				_listAccessory.add(image);
+				_accessoryPageAdapter.notifyDataSetChanged();
 			}
 		}
 	}
 
-	private byte[] convertBitmapToByteArray(Bitmap bitmap) {
+	public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		bitmap.compress(CompressFormat.PNG, 0, bos);
 		return bos.toByteArray();

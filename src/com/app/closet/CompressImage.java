@@ -37,8 +37,8 @@ public class CompressImage {
 	public static Bitmap decodeSampledBitmapFromFile(String path){
 		
 		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inSampleSize = 8;
-		
+
+		options.inSampleSize = 3;		
 		
 		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 		

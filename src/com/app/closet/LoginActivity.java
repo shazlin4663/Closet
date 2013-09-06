@@ -26,6 +26,8 @@ public class LoginActivity extends Activity {
 	private ProgressDialog		_progressDialog;
 	private TextView			_tvShowError;
 
+	public static final String	DIALOG_MESSAGE	= "Loading...";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -71,23 +73,27 @@ public class LoginActivity extends Activity {
 
 			if (isNetworkAvailable()) {
 				if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
-					_progressDialog = ProgressDialog.show(LoginActivity.this, "Please wait", "Loading");
+					_progressDialog = ProgressDialog.show(LoginActivity.this, "", DIALOG_MESSAGE);
 
 					ParseUser.logInInBackground(username, password, new LogInCallback() {
 
 						@Override
 						public void done(ParseUser user, ParseException e) {
 							if (user != null) {
-								if (_progressDialog != null && _progressDialog.isShowing())
-									_progressDialog.dismiss();
-
+								
 								startActivity(new Intent(LoginActivity.this, MainActivity.class));
 								_etUsername.setText("");
 								_etPassword.setText("");
+							
 								_tvShowError.setVisibility(TextView.GONE);
+						
+								if (_progressDialog != null && _progressDialog.isShowing())
+									_progressDialog.dismiss();
 							}
 							else {
 								_tvShowError.setVisibility(TextView.VISIBLE);
+
+								
 								if (_progressDialog != null && _progressDialog.isShowing())
 									_progressDialog.dismiss();
 							}
@@ -96,18 +102,18 @@ public class LoginActivity extends Activity {
 				}
 				else {
 					if (username.isEmpty())
-						_etUsername.setError("Enter username");
+						_etUsername.setError("Invalid username");
 					else if (password.isEmpty())
-						_etPassword.setError("Enter password");
+						_etPassword.setError("Invalid password");
 					else {
-						_etUsername.setError("Enter username");
-						_etPassword.setError("Enter password");
+						_etUsername.setError("Invalid username");
+						_etPassword.setError("Invalid password");
 					}
 				}
 			}
 			else {
 				DoAlertDialog dialog = new DoAlertDialog(LoginActivity.this);
-				dialog.createAlertDialog();
+				dialog.createNeutralAlertDialog("Internet Connection", "Please check your internet");
 			}
 		}
 	}
@@ -123,4 +129,5 @@ public class LoginActivity extends Activity {
 			return false;
 		}
 	}
+
 }

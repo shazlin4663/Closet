@@ -2,24 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp" >
+     >
+
+    <ImageView
+        android:id="@+id/ivDefaultIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/default_friend_icon" 
+        android:contentDescription="@string/NoImage"/>
 
     <TextView
         android:id="@+id/tvError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/ivDefaultIcon"
         android:text="@string/errorField"
         android:textColor="@color/red"
         android:visibility="gone" />
-    
+
     <EditText
         android:id="@+id/etRegisterName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvShowError"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/tvError"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:hint="@string/name" />
 
     <EditText

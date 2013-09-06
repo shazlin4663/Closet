@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="40dp" >
+
+        <ImageView
+            android:id="@+id/ivProfilePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/NoImage"
+            android:src="@drawable/default_friend_icon" />
+
+        <TextView
+            android:id="@+id/tvShowUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivProfilePicture"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvProfileView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvShowUsername"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvProfileView"
+            android:padding="10dp"
+            android:text="@string/viewName" />
+
+        <TextView
+            android:id="@+id/tvEmailView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvNameView"
+            android:padding="10dp"
+            android:text="@string/viewEmail" />
+
+        <TextView
+            android:id="@+id/tvPasswordView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvEmailView"
+            android:padding="10dp"
+            android:text="@string/viewPassword" />
+
+        <TextView
+            android:id="@+id/tvEditName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvProfileView"
+            android:layout_toRightOf="@+id/tvPasswordView"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvEditEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvEditName"
+            android:layout_toRightOf="@id/tvPasswordView"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvEditPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvEditEmail"
+            android:layout_toRightOf="@id/tvPasswordView"
+            android:padding="10dp"
+            android:text="@string/changePassword" />
+
+        <Button
+            android:id="@+id/btnUpdateProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvEditPassword"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:text="@string/updateProfile" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvprofileView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/tapEdit"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

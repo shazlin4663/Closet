@@ -2,19 +2,14 @@ package com.app.closet;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -69,7 +64,7 @@ public class RightScreenMenu extends LinearLayout {
 			for (int x = 0; x < friendArray.length(); x++) {
 				try {
 					JSONObject friendID = friendArray.getJSONObject(x);
-					String id = friendID.getString("objectId");
+					String id = friendID.getString(UserData.USER_ID_KEY);
 
 					ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendID");
 					query.getInBackground(id, new GetCallback<ParseObject>() {
@@ -90,7 +85,6 @@ public class RightScreenMenu extends LinearLayout {
 											
 											_itemAdapter.notifyDataSetChanged();
 										}
-
 									}
 								});
 							}
@@ -126,9 +120,8 @@ public class RightScreenMenu extends LinearLayout {
 				Intent intent = new Intent(context, MainActivity.class);
 				ParseUser user = _listOfFriends.get(arg2);
 				
-				intent.putExtra(MainActivity.INTENT_NAME, user.getObjectId());
+				intent.putExtra(MainActivity.INTENT_KEY, user.getObjectId());
 				context.startActivity(intent);
-				
 			}});
 	}
 }
